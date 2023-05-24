@@ -7,6 +7,14 @@ from bs4.element import Tag, ResultSet
 
 class MoneyControl(NewsScraper):
 
+    @staticmethod
+    def __add_stats_details(result_set: ResultSet, market_stats: Dict, column_names: List) -> None:
+        for tr in result_set[1:]:
+            td: List[Tag] = tr.find_all("td")
+            market_stats[column_names[0]].append(td[0].get_text())
+            market_stats[column_names[1]].append(td[1].get_text())
+            market_stats[column_names[2]].append(td[2].get_text())
+
     def get_headline(self) -> Tuple[str, str, str]:
         """Get the headline
 
@@ -100,14 +108,6 @@ class MoneyControl(NewsScraper):
         self.__add_stats_details(_52_week_low, market_stats["52_week_low"], ["company", "days_low", "current"])
 
         return market_stats
-
-    @staticmethod
-    def __add_stats_details(result_set: ResultSet, market_stats: Dict, column_names: List) -> None:
-        for tr in result_set[1:]:
-            td: List[Tag] = tr.find_all("td")
-            market_stats[column_names[0]].append(td[0].get_text())
-            market_stats[column_names[1]].append(td[1].get_text())
-            market_stats[column_names[2]].append(td[2].get_text())
 
 
 if __name__ == "__main__":

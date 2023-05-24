@@ -97,7 +97,11 @@ class NewsScraper:
         return soup
 
     def follow(self, url_structure: str) -> None:
-        """Use this method to update the soup object"""
+        """Use this method to update the soup object
+
+        Args:
+            url_structure (str): Nested URL structure
+        """
         self.url_structure = url_structure
         self.soup = self.get_soup_object()
 
