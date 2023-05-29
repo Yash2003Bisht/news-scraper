@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, json
 
 app = Flask(__name__)
 
@@ -14,8 +14,7 @@ def configure_app():
     # default route
     @app.route("/", methods=["GET"])
     def index():
-        # update this message
-        return "Working"
+        return json.dumps({"message": "Welcome"}), 200
 
     return app
 
