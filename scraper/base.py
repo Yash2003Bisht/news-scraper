@@ -8,7 +8,7 @@ from requests.models import Response
 from requests.sessions import Session
 from bs4 import BeautifulSoup
 
-from user_agents import USER_AGENTS
+from .user_agents import USER_AGENTS
 
 
 class NewsScraper:
@@ -76,7 +76,7 @@ class NewsScraper:
         for _ in range(self.max_retries):
             # bound the session object with specified method
             session_method = getattr(self.session, self.method)
-            response = session_method(url, headers=self.headers)
+            response: Response = session_method(url, headers=self.headers)
 
             if response.ok:
                 return response
@@ -96,13 +96,15 @@ class NewsScraper:
         soup = BeautifulSoup(resp.content, self.parser)
         return soup
 
-    def follow(self, url_structure: str) -> None:
+    def follow(self, url_structure: str, method: str = "get") -> None:
         """Use this method to update the soup object
 
         Args:
             url_structure (str): Nested URL structure
+            method (str, optional): The request method (e.g., "GET", "POST"). Defaults to "GET".
         """
         self.url_structure = url_structure
+        self.method = method
         self.soup = self.get_soup_object()
 
 

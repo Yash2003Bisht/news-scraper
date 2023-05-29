@@ -1,6 +1,7 @@
-from typing import List, Tuple, Dict
+import os
+from typing import List, Dict
 
-from base import NewsScraper
+from .base import NewsScraper
 
 from bs4.element import Tag, ResultSet
 
@@ -9,17 +10,24 @@ class MoneyControl(NewsScraper):
 
     @staticmethod
     def __add_stats_details(result_set: ResultSet, market_stats: Dict, column_names: List) -> None:
+        """Used to add the market stats details in a dictionary
+
+        Args:
+            result_set (ResultSet): Raw scraped data
+            market_stats (Dict): Dictionary to store the data
+            column_names (List): Dictionary key
+        """
         for tr in result_set[1:]:
             td: List[Tag] = tr.find_all("td")
             market_stats[column_names[0]].append(td[0].get_text())
             market_stats[column_names[1]].append(td[1].get_text())
             market_stats[column_names[2]].append(td[2].get_text())
 
-    def get_headline(self) -> Tuple[str, str, str]:
+    def get_headline(self) -> Dict:
         """Get the headline
 
         Returns:
-            Tuple[str, str, str]: News title, description & url
+            Dict: News title, description & url
         """
         if not self.url_structure:
             raise Exception("Unspecified URL structure, please specify a url.")
@@ -28,7 +36,11 @@ class MoneyControl(NewsScraper):
         title: str = headline.a.get("title")
         description: str = headline.p.get_text()
         url: str = headline.a.get("href")
-        return title, description, url
+        return {
+            "title": title,
+            "description": description,
+            "url": url
+        }
 
     def scrape_news(self, news_count: int = 5) -> List[Dict]:
         """Scrapes the news details
@@ -110,16 +122,27 @@ class MoneyControl(NewsScraper):
         return market_stats
 
 
+class Mint(NewsScraper):
+
+    def get_headline(self) -> Dict:
+        """Get the headline
+
+        Returns:
+            Dict: News title & url
+        """
+        headline: Tag = self.soup.find("h2", {"class": "headline"})
+        title: str = headline.a.get_text().replace("\n", "").strip()
+        url: str = os.path.join(self.base_url, self.url_structure) + headline.a.get("href")
+        return {
+            "title": title,
+            "url": url
+        }
+
+
 if __name__ == "__main__":
-    money_control = MoneyControl(host="moneycontrol.com")
-    money_control.follow("news/business/economy/")
-    data = money_control.get_headline()
-    print(data)
+    mint = Mint(host="livemint.com")
+    mint.follow("opinion")
+    print(mint.get_headline())
 
-    # money_control.follow("news/business/personal-finance/")
-    # data = money_control.scrape_news()
-
-    # import json
-    #
-    # with open("data4.json", "w") as file:
-    #     json.dump(data, file, indent=4)
+    # money_control = MoneyControl(host="moneycontrol.com")
+    # print(money_control.get_headline())
