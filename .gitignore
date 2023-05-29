@@ -1,2 +1,4 @@
 *.json
+tests
 __pycache__
+TODO
