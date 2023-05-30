@@ -43,16 +43,30 @@ def market_stats():
     """Market stats endpoint"""
     try:
         data: Dict = json.loads(request.data)
-        exchange = data["exchange"]
-        money_control = MoneyControl(host="moneycontrol.com")
+        exchange: str = data["exchange"].lower()
+
+        if exchange not in ["nse", "bse"]:
+            return json.dumps({"message": f"{exchange} is not supported", "error_id": "unsupported_exchange"}), 501
+
+        # scrape market stats
+        money_control: MoneyControl  = MoneyControl(host="moneycontrol.com")
         stats = money_control.stock_market_stats(exchange)
         return json.dumps({"message": "success", "data": stats}), 200
+
+    # invalid json format
+    except json.JSONDecodeError:
+        return json.dumps({"message": "Invalid json format", "error_id": "invalid_json_format"}), 400
+
+    # key is missing
+    except KeyError as key:
+        return json.dumps({"message": f"{key} value is missing", "error_id": "missing_value"}), 422
+
     except Exception as err:
         logger.error(err)
         return json.dumps({"message": "Internal server error", "error_id": "internal_server_error"}), 500
 
 
-@routes.route("/all-category")
+@routes.route("/all-category", methods=["GET"])
 def all_category():
     """All category endpoint, returns list of all categories"""
     return json.dumps({"message": "success", "categories": list(supported_categories)}), 200
