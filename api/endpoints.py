@@ -4,6 +4,7 @@ from typing import Dict
 from flask import Blueprint, request
 
 from .helper_functions import *
+from . import logger
 
 routes = Blueprint("routes", __name__)
 
@@ -33,7 +34,7 @@ def get_headline():
 
     # Internal server error
     except Exception as err:
-        print(err)
+        logger.error(err)
         return json.dumps({"message": "Internal server error", "error_id": "internal_server_id"}), 500
 
 
@@ -47,7 +48,7 @@ def market_stats():
         stats = money_control.stock_market_stats(exchange)
         return json.dumps({"message": "success", "data": stats}), 200
     except Exception as err:
-        print(err)
+        logger.error(err)
         return json.dumps({"message": "Internal server error", "error_id": "internal_server_error"}), 500
 
 

@@ -1,6 +1,22 @@
 from flask import Flask, json
+import logging
 
 app = Flask(__name__)
+
+# ------------- logger config -------------
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+
+formatter = logging.Formatter("[%(levelname)s] - %(asctime)s - %(name)s - %(message)s")
+
+ch.setFormatter(formatter)
+
+logger.addHandler(ch)
+# -----------------------------------------
+
 
 def configure_app():
     from .endpoints import routes
