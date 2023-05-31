@@ -22,7 +22,7 @@ def get_headline():
             headline: Dict = scraper_obj.get_headline()
             return json.dumps({"message": f"success", "data": headline}), 200
 
-        return json.dumps({"message": f"{category} is not supported", "error_id": "unsupported_category"}), 501
+        return json.dumps({"message": f"category {category} is not supported", "error_id": "unsupported_category"}), 501
 
     # invalid json format
     except json.JSONDecodeError:
@@ -46,7 +46,7 @@ def market_stats():
         exchange: str = data["exchange"].lower()
 
         if exchange not in ["nse", "bse"]:
-            return json.dumps({"message": f"{exchange} is not supported", "error_id": "unsupported_exchange"}), 501
+            return json.dumps({"message": f"exchange {exchange} is not supported", "error_id": "unsupported_exchange"}), 501
 
         # scrape market stats
         money_control: MoneyControl  = MoneyControl(host="moneycontrol.com")
