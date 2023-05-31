@@ -130,6 +130,9 @@ class Mint(NewsScraper):
         Returns:
             Dict: News title & url
         """
+        if not self.url_structure:
+            raise Exception("Unspecified URL structure, please specify a url.")
+
         headline: Tag = self.soup.find("h2", {"class": "headline"})
         title: str = headline.a.get_text().replace("\n", "").strip()
         url: str = os.path.join(self.base_url, self.url_structure) + headline.a.get("href")
