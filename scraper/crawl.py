@@ -8,6 +8,10 @@ from bs4.element import Tag, ResultSet
 
 class MoneyControl(NewsScraper):
 
+    def __init__(self) -> None:
+        """Constructor"""
+        super().__init__(host="moneycontrol.com")
+
     @staticmethod
     def __add_stats_details(result_set: ResultSet, market_stats: Dict, column_names: List) -> None:
         """Used to add the market stats details in a dictionary
@@ -124,6 +128,10 @@ class MoneyControl(NewsScraper):
 
 class Mint(NewsScraper):
 
+    def __init__(self) -> None:
+        """Constructor"""
+        super().__init__(host="livemint.com")
+
     def get_headline(self) -> Dict:
         """Get the headline
 
@@ -135,17 +143,25 @@ class Mint(NewsScraper):
 
         headline: Tag = self.soup.find("h2", {"class": "headline"})
         title: str = headline.a.get_text().replace("\n", "").strip()
-        url: str = os.path.join(self.base_url, self.url_structure) + headline.a.get("href")
+        referral_link: str = headline.a.get("href")
+        url: str = os.path.join(self.base_url, self.url_structure) + referral_link
+
+        # visiting the article url to scrape the description
+        self.follow(self.url_structure + referral_link)
+        description: str = self.soup.find("div", {"class": "summary"}).h2.get_text()
+
         return {
             "title": title,
+            "description": description,
             "url": url
         }
 
 
 if __name__ == "__main__":
-    mint = Mint(host="livemint.com")
+    mint = Mint()
     mint.follow("opinion")
     print(mint.get_headline())
 
-    # money_control = MoneyControl(host="moneycontrol.com")
+    # money_control = MoneyControl()
+    # money_control.follow("news/business")
     # print(money_control.get_headline())

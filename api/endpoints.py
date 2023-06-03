@@ -18,7 +18,8 @@ def get_headline():
 
         if supported_category(category):
             site, url = get_site_name_and_url(category)
-            scraper_obj = get_object(site, url)
+            scraper_obj = get_object(site)
+            scraper_obj.follow(url)
             headline: Dict = scraper_obj.get_headline()
             return json.dumps({"message": f"success", "data": headline}), 200
 

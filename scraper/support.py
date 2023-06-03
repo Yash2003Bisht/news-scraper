@@ -28,7 +28,7 @@ categories = {
     "india": [("money-control", "news/india/")],
     "world": [("money-control", "news/world/")],
 
-    # -------------------- Entertainment, Lifestyle & Health -----------------
+    # ------------------ Entertainment, Lifestyle & Health -------------------
     "entertainment": [("money-control", "news/trends/entertainment/")],
     "lifestyle": [("money-control", "news/trends/lifestyle/")],
     "health": [("money-control", "news/health-and-fitness/")],
@@ -36,7 +36,7 @@ categories = {
     "photos": [("money-control", "news/photos/")],
     "travel": [("money-control", "news/trends/travel/")],
 
-    # ------------------------------ Others ---------------------------------
+    # ------------------------------- Others --------------------------------
     "infographic": [("money-control", "news/infographic/")],
     "books": [("money-control", "news/tags/books.html")],
     "politics": [("money-control", "news/politics/")],
