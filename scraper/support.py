@@ -23,10 +23,10 @@ categories = {
     "tech": [("money-control", "news/technology/"), ("mint", "technology")],
 
     # ------------------------------ General News ----------------------------
-    "latest-news": [("money-control", "news/news-all/"), ("mint", "latest-news")],
-    "news": [("money-control", "news/news-all/"), ("mint", "news")],
-    "india": [("money-control", "news/india/")],
-    "world": [("money-control", "news/world/")],
+    "latest-news": [("money-control", "news/news-all/"), ("mint", "latest-news"), ("ndtv", "latest")],
+    "news": [("money-control", "news/news-all/"), ("mint", "news"), ("ndtv", "latest")],
+    "india": [("money-control", "news/india/"), ("ndtv", "india")],
+    "world": [("money-control", "news/world/"), ("ndtv", "world-news")],
 
     # ------------------ Entertainment, Lifestyle & Health -------------------
     "entertainment": [("money-control", "news/trends/entertainment/")],
@@ -41,9 +41,12 @@ categories = {
     "books": [("money-control", "news/tags/books.html")],
     "politics": [("money-control", "news/politics/")],
     "science": [("money-control", "news/tags/science.html")],
-    "education": [("money-control", "news/tags/education.html")],
+    "education": [("money-control", "news/tags/education.html"), ("ndtv", "education")],
     "premium": [("mint", "premium")],
-    "opinion": [("mint", "opinion")]
+    "opinion": [("mint", "opinion"), ("ndtv", "opinion")],
+    "cities": [("ndtv", "cities")],
+    "offbeat": [("ndtv", "offbeat")],
+    "feature": [("ndtv", "feature")]
 }
-sites = ["money-control", "mint"]
+sites = ["money-control", "mint", "ndtv"]
 supported_categories = categories.keys()

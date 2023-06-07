@@ -136,7 +136,7 @@ class Mint(NewsScraper):
         """Get the headline
 
         Returns:
-            Dict: News title & url
+            Dict: News title, description & url
         """
         if not self.url_structure:
             raise Exception("Unspecified URL structure, please specify a url.")
@@ -157,11 +157,33 @@ class Mint(NewsScraper):
         }
 
 
-if __name__ == "__main__":
-    mint = Mint()
-    mint.follow("opinion")
-    print(mint.get_headline())
+class NDTV(NewsScraper):
+    def __init__(self) -> None:
+        """Constructor"""
+        super().__init__(host="ndtv.com")
 
-    # money_control = MoneyControl()
-    # money_control.follow("news/business")
-    # print(money_control.get_headline())
+    def get_headline(self):
+        """Get the headline
+
+        Returns:
+            Dict: News title, description & url
+        """
+        if not self.url_structure:
+            raise Exception("Unspecified URL structure, please specify a url.")
+
+        headline: Tag = self.soup.find("div", {"class": "news_Itm-cont"})
+        title: str = headline.h2.a.get_text()
+        description: str = headline.p.get_text()
+        url: str = headline.a.get("href")
+
+        return {
+            "title": title,
+            "description": description,
+            "url": url
+        }
+
+
+if __name__ == "__main__":
+    ndtv = NDTV()
+    ndtv.follow("latest")
+    print(ndtv.get_headline())
