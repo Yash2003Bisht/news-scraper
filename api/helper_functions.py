@@ -30,7 +30,7 @@ def get_site_name_and_url(category: str) -> List[Tuple]:
     return random.choice(categories.get(category))
 
 
-def get_object(site: str) -> Union[Mint, MoneyControl]:
+def get_object(site: str) -> Union[Mint, MoneyControl, NDTV]:
     """Returns a site object for scraping news
 
     Args:
@@ -39,7 +39,10 @@ def get_object(site: str) -> Union[Mint, MoneyControl]:
     Returns:
         Union[Mint, MoneyControl]: Either Mint or MoneyControl
     """
-    if site == "mint":
-        return Mint()
-    else:
-        return MoneyControl()
+    match site:
+        case "mint":
+            return Mint()
+        case "ndtv":
+            return NDTV()
+        case _:
+            return MoneyControl()
