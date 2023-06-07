@@ -35,7 +35,7 @@ def get_headline():
 
     # Internal server error
     except Exception as err:
-        logger.error(err)
+        logger.critical(err)
         return json.dumps({"message": "Internal server error", "error_id": "internal_server_id"}), 500
 
 
@@ -63,7 +63,7 @@ def market_stats():
         return json.dumps({"message": f"{key} value is missing", "error_id": "missing_value"}), 422
 
     except Exception as err:
-        logger.error(err)
+        logger.critical(err)
         return json.dumps({"message": "Internal server error", "error_id": "internal_server_error"}), 500
 
 
