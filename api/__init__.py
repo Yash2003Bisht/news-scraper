@@ -22,7 +22,7 @@ if os.environ.get("PRODUCTION", "false") != "false":
             FlaskIntegration(),
         ],
         traces_sample_rate=1.0,
-        release="news-scraper@v1.3.1"
+        release="news-scraper@v1.4.1"
     )
 # -----------------------------------------
 
