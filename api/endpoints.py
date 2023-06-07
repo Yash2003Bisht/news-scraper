@@ -50,7 +50,7 @@ def market_stats():
             return json.dumps({"message": f"exchange {exchange} is not supported", "error_id": "unsupported_exchange"}), 501
 
         # scrape market stats
-        money_control: MoneyControl  = MoneyControl(host="moneycontrol.com")
+        money_control: MoneyControl  = MoneyControl()
         stats = money_control.stock_market_stats(exchange)
         return json.dumps({"message": "success", "data": stats}), 200
 
