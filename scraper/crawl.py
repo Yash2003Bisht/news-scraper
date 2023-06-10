@@ -13,19 +13,16 @@ class MoneyControl(NewsScraper):
         super().__init__(host="moneycontrol.com")
 
     @staticmethod
-    def __add_stats_details(result_set: ResultSet, market_stats: Dict, column_names: List) -> None:
+    def __add_stats_details(result_set: ResultSet, market_stats: List) -> None:
         """Used to add the market stats details in a dictionary
 
         Args:
             result_set (ResultSet): Raw scraped data
-            market_stats (Dict): Dictionary to store the data
-            column_names (List): Dictionary key
+            market_stats (List): List to store the data
         """
         for tr in result_set[1:]:
             td: List[Tag] = tr.find_all("td")
-            market_stats[column_names[0]].append(td[0].get_text())
-            market_stats[column_names[1]].append(td[1].get_text())
-            market_stats[column_names[2]].append(td[2].get_text())
+            market_stats.append([td[0].get_text(), td[1].get_text(), td[2].get_text()])
 
     def get_headline(self) -> Dict:
         """Get the headline
@@ -106,22 +103,26 @@ class MoneyControl(NewsScraper):
         _52_week_low: ResultSet = _52_week_low_table.find("div", {"id": f"52low_{exchange_name}"}).find_all("tr")
 
         # market stats dict
-        market_stats = {"top_gain": {"company": [], "current": [], "percentage_gain": []},
-                        "top_lose": {"company": [], "current": [], "percentage_gain": []},
-                        "52_week_high": {"company": [], "days_high": [], "current": []},
-                        "52_week_low": {"company": [], "days_low": [], "current": []}}
+        market_stats = {"top_gain": [],
+                        "top_lose": [],
+                        "52_week_high": [],
+                        "52_week_low": []}
 
         # top gain
-        self.__add_stats_details(topgain, market_stats["top_gain"], ["company", "current", "percentage_gain"])
+        self.__add_stats_details(topgain, market_stats["top_gain"])
+        market_stats["top_gain"].insert(0, ["company", "current", "percentage_gain"])
 
         # top lose
-        self.__add_stats_details(toplose, market_stats["top_lose"], ["company", "current", "percentage_gain"])
+        self.__add_stats_details(toplose, market_stats["top_lose"])
+        market_stats["top_lose"].insert(0, ["company", "current", "percentage_loss"])
 
         # 52-week high
-        self.__add_stats_details(_52_week_high, market_stats["52_week_high"], ["company", "days_high", "current"])
+        self.__add_stats_details(_52_week_high, market_stats["52_week_high"])
+        market_stats["52_week_high"].insert(0, ["company", "days_high", "current"])
 
         # 52-week low
-        self.__add_stats_details(_52_week_low, market_stats["52_week_low"], ["company", "days_low", "current"])
+        self.__add_stats_details(_52_week_low, market_stats["52_week_low"])
+        market_stats["52_week_low"].insert(0, ["company", "days_low", "current"])
 
         return market_stats
 
@@ -184,6 +185,5 @@ class NDTV(NewsScraper):
 
 
 if __name__ == "__main__":
-    ndtv = NDTV()
-    ndtv.follow("latest")
-    print(ndtv.get_headline())
+    money_control = MoneyControl()
+    print(money_control.stock_market_stats("nse"))
