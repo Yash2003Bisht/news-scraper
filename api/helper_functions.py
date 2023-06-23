@@ -1,5 +1,5 @@
 import random
-from typing import List, Tuple, Union
+from typing import List, Tuple
 
 from scraper import *
 
@@ -30,19 +30,18 @@ def get_site_name_and_url(category: str) -> List[Tuple]:
     return random.choice(categories.get(category))
 
 
-def get_object(site: str) -> Union[Mint, MoneyControl, NDTV]:
+def get_object(site: str):
     """Returns a site object for scraping news
 
     Args:
         site (str): name of the site
-
-    Returns:
-        Union[Mint, MoneyControl]: Either Mint or MoneyControl
     """
     match site:
         case "mint":
             return Mint()
         case "ndtv":
             return NDTV()
+        case "business-today":
+            return BusinessToday()
         case _:
             return MoneyControl()

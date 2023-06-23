@@ -157,6 +157,12 @@ class Mint(NewsScraper):
             "url": url
         }
 
+    def market_stats(self):
+        stats_card: Tag = self.soup.find_all("a")
+        print(stats_card)
+        stats = stats_card.find_all("a")
+        print(stats)
+
 
 class NDTV(NewsScraper):
     def __init__(self) -> None:
@@ -184,6 +190,33 @@ class NDTV(NewsScraper):
         }
 
 
+class BusinessToday(NewsScraper):
+    def __init__(self) -> None:
+        """Constructor"""
+        super().__init__(host="businesstoday.in")
+
+    def get_headline(self):
+        """Get the headline
+
+        Returns:
+           Dict: News title, description & url
+        """
+
+        headline: Tag = self.soup.find("div", {"class": "bn_item_title"})
+        title: str = headline.h3.a.get("title")
+        url: str = headline.h3.a.get("href")
+
+        # visiting the article url to scrape the description
+        self.follow(url)
+        description: str = self.soup.find("div", {"class": "sab-head-tranlate-sec"}).h2.get_text()
+
+        return {
+            "title": title,
+            "description": description,
+            "url": url
+        }
+
+
 if __name__ == "__main__":
-    money_control = MoneyControl()
-    print(money_control.stock_market_stats("nse"))
+    mint = Mint()
+    print(mint.market_stats())

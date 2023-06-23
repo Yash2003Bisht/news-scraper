@@ -1,7 +1,7 @@
 import random
 import time
 import os
-from typing import Dict, Union
+from typing import Dict, Union, List
 
 import requests
 from requests.models import Response
@@ -42,7 +42,8 @@ class NewsScraper:
         self.backoff_time = backoff_time
         self.parser = parser
         self.session: Session = requests.session()
-        self.soup = self.get_soup_object()
+        self.soup = self.get_soup_object()  # Stores Beautiful soup object
+        self.json_data = None  # Stores Json data
 
     @staticmethod
     def get_random_user_agent() -> str:
@@ -68,14 +69,17 @@ class NewsScraper:
         if not self.headers.get("User-Agent"):
             self.headers["User-Agent"] = self.get_random_user_agent()
 
-        if self.url_structure:
+        if self.url_structure and not self.url_structure.startswith("http"):
             url: str = os.path.join(self.base_url, self.url_structure)
+        elif self.url_structure:
+            url: str = self.url_structure
         else:
             url = self.base_url
 
+        # bound the session object with specified method
+        session_method = getattr(self.session, self.method)
+
         for _ in range(self.max_retries):
-            # bound the session object with specified method
-            session_method = getattr(self.session, self.method)
             response: Response = session_method(url, headers=self.headers)
 
             if response.ok:
@@ -96,16 +100,30 @@ class NewsScraper:
         soup = BeautifulSoup(resp.content, self.parser)
         return soup
 
-    def follow(self, url_structure: str, method: str = "get") -> None:
+    def get_json_response(self) -> Union[List, Dict]:
+        """Make a request and return json response
+
+        Returns:
+            Union[List, Dict]: List or Dict
+        """
+        resp: Response = self.make_reqeust()
+        return resp.json()
+
+    def follow(self, url_structure: str, method: str = "get", data_type: str = "soup") -> None:
         """Use this method to update the soup object
 
         Args:
             url_structure (str): Nested URL structure
             method (str, optional): The request method (e.g., "GET", "POST"). Defaults to "GET".
+            data_type (str, optional): Json or Soup. Defaults to "soup"
         """
         self.url_structure = url_structure
         self.method = method
-        self.soup = self.get_soup_object()
+
+        if data_type == "json":
+            self.json_data = self.get_json_response()
+        else:
+            self.soup = self.get_soup_object()
 
 
 if __name__ == "__main__":

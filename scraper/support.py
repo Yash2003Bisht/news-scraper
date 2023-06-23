@@ -24,7 +24,7 @@ categories = {
 
     # ------------------------------ General News ----------------------------
     "latest-news": [("money-control", "news/news-all/"), ("mint", "latest-news"), ("ndtv", "latest")],
-    "news": [("money-control", "news/news-all/"), ("mint", "news"), ("ndtv", "latest")],
+    "news": [("money-control", "news/news-all/"), ("mint", "news"), ("ndtv", "latest"), ("business-today", "")],
     "india": [("money-control", "news/india/"), ("ndtv", "india")],
     "world": [("money-control", "news/world/"), ("ndtv", "world-news")],
 
