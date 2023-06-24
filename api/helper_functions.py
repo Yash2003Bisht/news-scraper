@@ -41,7 +41,7 @@ def get_object(site: str):
             return Mint()
         case "ndtv":
             return NDTV()
-        case "business-today":
-            return BusinessToday()
+        # case "business-today":
+        #     return BusinessToday()
         case _:
             return MoneyControl()
