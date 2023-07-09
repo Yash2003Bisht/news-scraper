@@ -157,12 +157,6 @@ class Mint(NewsScraper):
             "url": url
         }
 
-    def market_stats(self):
-        stats_card: Tag = self.soup.find_all("a")
-        print(stats_card)
-        stats = stats_card.find_all("a")
-        print(stats)
-
 
 class NDTV(NewsScraper):
     def __init__(self) -> None:
@@ -217,6 +211,77 @@ class BusinessToday(NewsScraper):
         }
 
 
+class StocksMarket(NewsScraper):
+    def __init__(self):
+        """Constructor"""
+        super().__init__(host="livemint.com")
+        # load the stock data into the json_data variable declared in the parent class
+        self.follow("https://www.livemint.com/lm-img/markets/prod/mintgeniemarketdashboardfeed.json", data_type="json")
+
+    def market_stats(self):
+        """Detailed market stats
+
+        Returns:
+            Dict: Contains Top gain, lose, 52-week high & 52-week low stocks details
+        """
+        top_gainers = self.json_data["data"][2]["data"]["topGainers"] + \
+                      self.json_data["data"][3]["data"]["topGainers"]
+        top_looser = self.json_data["data"][2]["data"]["topLooser"] + \
+                     self.json_data["data"][3]["data"]["topLooser"]
+        _52_week_high = self.json_data["data"][4]["data"]["BSE_52WeekHighLow"]["high52Week"] + \
+                        self.json_data["data"][4]["data"]["NSE_52WeekHighLow"]["high52Week"]
+        _52_week_low = self.json_data["data"][4]["data"]["BSE_52WeekHighLow"]["low52Week"] + \
+                       self.json_data["data"][4]["data"]["NSE_52WeekHighLow"]["low52Week"]
+
+        return {
+            "top_gainers": top_gainers,
+            "top_looser": top_looser,
+            "52_weeK_high": _52_week_high,
+            "52_week_low": _52_week_low
+        }
+
+    def most_active_stocks(self):
+        """Most active stocks
+
+        Returns:
+            Dict: Most active stocks on NSE & BSE
+        """
+        # most active stocks
+        active_stocks_nse = self.json_data["data"][5]["data"]  # NSE
+        active_stocks_bse = self.json_data["data"][6]["data"]  # BSE
+        return {
+            "most_active_nse": active_stocks_nse,
+            "most_active_bse": active_stocks_bse
+        }
+
+    def market_mutual_funds(self):
+        """Gives details of types of mutual funds like debt, index, small cap, mid cap etc.
+
+        Returns:
+            Dict: Contains Mutual funds details
+        """
+        mutual_funds = self.json_data["data"][7]["data"]
+        return mutual_funds
+
+    def price_volume_shocker(self):
+        """A list of stocks that have risen or dived sharply on the BSE & the NSE.
+
+        Returns:
+            Dict: Price shocker details
+        """
+        data = self.json_data["data"][8]["data"]
+        return data
+
+    def market_indices(self):
+        """Market indices like S&P 500, BSE Midcap, BSE SENSEX etc.
+
+        Returns:
+            List: Indices details
+        """
+        indices = self.json_data["data"][1]["data"]
+        return indices
+
+
 if __name__ == "__main__":
-    mint = Mint()
-    print(mint.market_stats())
+    stocks_market = StocksMarket()
+    print(stocks_market.market_stats())
