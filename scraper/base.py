@@ -42,8 +42,15 @@ class NewsScraper:
         self.backoff_time = backoff_time
         self.parser = parser
         self.session: Session = requests.session()
-        self.soup = self.get_soup_object()  # Stores Beautiful soup object
+        self.soup = None  # Stores Beautiful soup object
         self.json_data = None  # Stores Json data
+
+        # Check the header if it is None, then convert it to Dict
+        if not self.headers:
+            self.headers = {}
+
+        # Get beautiful soup object
+        self.soup = self.get_soup_object()
 
     @staticmethod
     def get_random_user_agent() -> str:
@@ -63,12 +70,8 @@ class NewsScraper:
         self.max_retries = max(1, self.max_retries)
         delay = min(self.backoff_time, 32) + random.randint(0, 1000) / 1000.0
 
-        if not self.headers:
-            self.headers = {}
-
-        if not self.headers.get("User-Agent"):
-            self.headers["User-Agent"] = self.get_random_user_agent()
-
+        # Below check is to handle the case where we need to switch to another host/subdomain/url.
+        # Although this is not the right way to handle this, it will update in the future.
         if self.url_structure and not self.url_structure.startswith("http"):
             url: str = os.path.join(self.base_url, self.url_structure)
         elif self.url_structure:
@@ -76,11 +79,18 @@ class NewsScraper:
         else:
             url = self.base_url
 
+        # Check if User-Agent is present in the header, add it if not present
+        if not self.headers.get("User-Agent"):
+            self.headers["User-Agent"] = self.get_random_user_agent()
+
+        # update the session headers
+        self.session.headers.update(self.headers)
+
         # bound the session object with specified method
         session_method = getattr(self.session, self.method)
 
         for _ in range(self.max_retries):
-            response: Response = session_method(url, headers=self.headers)
+            response: Response = session_method(url)
 
             if response.ok:
                 return response
