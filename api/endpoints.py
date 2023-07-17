@@ -128,3 +128,9 @@ def all_category():
 def markets_tpes():
     """Returns list of all market types"""
     return json.dumps({"message": "success", "market-types": list(market_types)}), 200
+
+
+@routes.route("/test", methods=["GET"])
+def test_endpoint():
+    """ZeroDivisionError"""
+    return 10/0
