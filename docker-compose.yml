@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   web:
-    image: ghcr.io/default-docker-org/news-scraper:v1.5.6
+    image: ghcr.io/default-docker-org/news-scraper:v1.5.7
     ports:
       - "80:5000"
     expose:
