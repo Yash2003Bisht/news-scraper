@@ -126,7 +126,7 @@ class BaseScraper:
         return resp.json()
 
     def follow(self, url_structure: str, method: str = "get", data_type: str = "soup") -> None:
-        """Use this method to update the soup object
+        """Use this method to update the soup/json object
 
         Args:
             url_structure (str): Nested URL structure or full URL
