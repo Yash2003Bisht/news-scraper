@@ -1,12 +1,17 @@
 import os
 from typing import List, Dict
 
-from .base import NewsScraper
-
 from bs4.element import Tag, ResultSet
 
+try:
+    # for API
+    from .base import BaseScraper
+except ImportError:
+    # for testing
+    from base import BaseScraper
 
-class MoneyControl(NewsScraper):
+
+class MoneyControl(BaseScraper):
 
     def __init__(self) -> None:
         """Constructor"""
@@ -33,6 +38,9 @@ class MoneyControl(NewsScraper):
         if not self.url_structure:
             raise Exception("Unspecified URL structure, please specify a url.")
 
+        # load soup object
+        self.soup = self.get_soup_object()
+
         headline: Tag = self.soup.find("li", {"class": "clearfix"})
         title: str = headline.a.get("title")
         description: str = headline.p.get_text()
@@ -54,6 +62,9 @@ class MoneyControl(NewsScraper):
         """
         if not self.url_structure:
             raise Exception("Unspecified URL structure, please specify a URL. Use follow method to update soup object.")
+
+        # load soup object
+        self.soup = self.get_soup_object()
 
         news: Tag = self.soup.find("ul", {"id": "cagetory"})
         news_details: List = []
@@ -87,8 +98,9 @@ class MoneyControl(NewsScraper):
         Returns:
             Dict: Contains Top 3 gain, lose, 52-week high & 52-week low stocks details
         """
-        # update the soup object
-        self.follow("stocks/marketstats/index.php")
+        # load soup object
+        self.url_structure = "stocks/marketstats/index.php"
+        self.soup = self.get_soup_object()
 
         # get all the tables
         topgain_table: Tag = self.soup.find("div", {"id": "div1_topgainlose"})
@@ -126,8 +138,29 @@ class MoneyControl(NewsScraper):
 
         return market_stats
 
+    def personal_finance(self):
+        """Scrape news about financial planning
 
-class Mint(NewsScraper):
+        Returns:
+            Dict: News title, description & url
+        """
+        # load soup object
+        self.url_structure = "mc/pfspending/investingplanninglisting?&start=0"
+        self.soup = self.get_soup_object()
+
+        heading = self.soup.find("h3", {"class": "news_heading"})
+        title = heading.get_text()
+        description = self.soup.find("p", {"class": "desc_mobile"}).get_text()
+        url = self.base_url + heading.a.get("href")
+
+        return {
+            "title": title,
+            "description": description,
+            "url": url
+        }
+
+
+class Mint(BaseScraper):
 
     def __init__(self) -> None:
         """Constructor"""
@@ -141,6 +174,9 @@ class Mint(NewsScraper):
         """
         if not self.url_structure:
             raise Exception("Unspecified URL structure, please specify a url.")
+
+        # load soup object
+        self.soup = self.get_soup_object()
 
         headline: Tag = self.soup.find("h2", {"class": "headline"})
         title: str = headline.a.get_text().replace("\n", "").strip()
@@ -158,7 +194,7 @@ class Mint(NewsScraper):
         }
 
 
-class NDTV(NewsScraper):
+class NDTV(BaseScraper):
     def __init__(self) -> None:
         """Constructor"""
         super().__init__(host="ndtv.com")
@@ -172,6 +208,9 @@ class NDTV(NewsScraper):
         if not self.url_structure:
             raise Exception("Unspecified URL structure, please specify a url.")
 
+        # load soup object
+        self.soup = self.get_soup_object()
+
         headline: Tag = self.soup.find("div", {"class": "news_Itm-cont"})
         title: str = headline.h2.a.get_text()
         description: str = headline.p.get_text()
@@ -184,7 +223,7 @@ class NDTV(NewsScraper):
         }
 
 
-class BusinessToday(NewsScraper):
+class BusinessToday(BaseScraper):
     def __init__(self) -> None:
         """Constructor"""
         super().__init__(host="businesstoday.in")
@@ -195,6 +234,8 @@ class BusinessToday(NewsScraper):
         Returns:
            Dict: News title, description & url
         """
+        # load soup object
+        self.soup = self.get_soup_object()
 
         headline: Tag = self.soup.find("div", {"class": "bn_item_title"})
         title: str = headline.h3.a.get("title")
@@ -211,12 +252,17 @@ class BusinessToday(NewsScraper):
         }
 
 
-class StocksMarket(NewsScraper):
-    def __init__(self):
-        """Constructor"""
-        super().__init__(host="livemint.com")
-        # load the stock data into the json_data variable declared in the parent class
-        self.follow("https://www.livemint.com/lm-img/markets/prod/mintgeniemarketdashboardfeed.json", data_type="json")
+class StocksMarket(BaseScraper):
+    # livemint's market dashboard feed url
+    live_mint = "https://www.livemint.com/lm-img/markets/prod/mintgeniemarketdashboardfeed.json"
+
+    def load_json_data(self, url: str) -> None:
+        """Loads the stock data into the json_data variable declared in the parent class
+
+            Args:
+                url (str): Nested URL structure or full URL
+        """
+        self.follow(url, data_type="json")
 
     def market_stats(self):
         """Detailed market stats
@@ -224,6 +270,9 @@ class StocksMarket(NewsScraper):
         Returns:
             Dict: Contains Top gain, lose, 52-week high & 52-week low stocks details
         """
+        # load json data
+        self.load_json_data(self.live_mint)
+
         top_gainers = self.json_data["data"][2]["data"]["topGainers"] + \
                       self.json_data["data"][3]["data"]["topGainers"]
         top_looser = self.json_data["data"][2]["data"]["topLooser"] + \
@@ -246,6 +295,9 @@ class StocksMarket(NewsScraper):
         Returns:
             Dict: Most active stocks on NSE & BSE
         """
+        # load json data
+        self.load_json_data(self.live_mint)
+
         # most active stocks
         active_stocks_nse = self.json_data["data"][5]["data"]  # NSE
         active_stocks_bse = self.json_data["data"][6]["data"]  # BSE
@@ -260,6 +312,9 @@ class StocksMarket(NewsScraper):
         Returns:
             Dict: Contains Mutual funds details
         """
+        # load json data
+        self.load_json_data(self.live_mint)
+
         mutual_funds = self.json_data["data"][7]["data"]
         return mutual_funds
 
@@ -269,6 +324,9 @@ class StocksMarket(NewsScraper):
         Returns:
             Dict: Price shocker details
         """
+        # load json data
+        self.load_json_data(self.live_mint)
+
         data = self.json_data["data"][8]["data"]
         return data
 
@@ -278,6 +336,9 @@ class StocksMarket(NewsScraper):
         Returns:
             List: Indices details
         """
+        # load json data
+        self.load_json_data(self.live_mint)
+
         indices = self.json_data["data"][1]["data"]
         return indices
 
