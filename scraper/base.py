@@ -8,14 +8,19 @@ from requests.models import Response
 from requests.sessions import Session
 from bs4 import BeautifulSoup
 
-from .user_agents import USER_AGENTS
+try:
+    # for API
+    from .user_agents import USER_AGENTS
+except ImportError:
+    # for testing
+    from user_agents import USER_AGENTS
 
 
-class NewsScraper:
+class BaseScraper:
 
     def __init__(
             self,
-            host: str,
+            host: str = None,
             url_structure: str = None,
             method: str = "get",
             max_retries: int = 5,
@@ -26,7 +31,7 @@ class NewsScraper:
         """Constructor
 
         Args:
-            host (str): Host name of the targeted website
+            host (str, optional): Host name of the targeted website. Defaults to None.
             url_structure (str, optional): URL structure of the page. Defaults to None.
             method (str, optional): The request method (e.g., "GET", "POST"). Defaults to "GET".
             max_retries (int, optional): The number of retries to make if the request fails. Defaults to 5.
@@ -34,7 +39,6 @@ class NewsScraper:
             backoff_time (int, optional): The initial backoff time in seconds between retries. Defaults to 1.
             parser (str, optional): Desirable features of the parser to be used. Defaults to "lxml".
         """
-        self.base_url = f"https://{host}"
         self.url_structure = url_structure
         self.method = method.lower()
         self.max_retries = max_retries
@@ -44,13 +48,15 @@ class NewsScraper:
         self.session: Session = requests.session()
         self.soup = None  # Stores Beautiful soup object
         self.json_data = None  # Stores Json data
+        self.base_url = None  # Stores base url ex. https://testing.com
 
         # Check the header if it is None, then convert it to Dict
         if not self.headers:
             self.headers = {}
 
-        # Get beautiful soup object
-        self.soup = self.get_soup_object()
+        # Set base_url if host is not None
+        if host:
+            self.base_url = f"https://{host}"
 
     @staticmethod
     def get_random_user_agent() -> str:
@@ -123,13 +129,14 @@ class NewsScraper:
         """Use this method to update the soup object
 
         Args:
-            url_structure (str): Nested URL structure
+            url_structure (str): Nested URL structure or full URL
             method (str, optional): The request method (e.g., "GET", "POST"). Defaults to "GET".
             data_type (str, optional): Json or Soup. Defaults to "soup"
         """
         self.url_structure = url_structure
         self.method = method
 
+        # Check the data_type
         if data_type == "json":
             self.json_data = self.get_json_response()
         else:
@@ -137,5 +144,5 @@ class NewsScraper:
 
 
 if __name__ == "__main__":
-    news_scraper = NewsScraper("google.com")
+    news_scraper = BaseScraper("google.com")
     print(news_scraper.soup.prettify())
