@@ -1,4 +1,5 @@
 import json
+import random
 from typing import Dict
 
 from flask import Blueprint, request
@@ -17,11 +18,27 @@ def get_headline():
         category = data["category"]
 
         if supported_category(category):
-            site, url = get_site_name_and_url(category)
-            scraper_obj = get_object(site)
-            scraper_obj.follow(url)
-            headline: Dict = scraper_obj.get_headline()
-            return json.dumps({"message": f"success", "data": headline}), 200
+            # get & randomly shuffle all sites and URLs for the category
+            sites_and_urls = get_all_site_name_and_url(category)
+            random.shuffle(sites_and_urls)
+
+            # iterate through all sites and URLs, and return whichever works
+            for site_url in sites_and_urls:
+                site, url = site_url
+
+                try:
+                    scraper_obj = get_object(site)
+                    scraper_obj.follow(url)
+                    headline: Dict = scraper_obj.get_headline()
+                    return json.dumps({"message": f"success", "data": headline}), 200
+
+                # handle AttributeError and log a message
+                except AttributeError:
+                    logger.error(f"Attribute Error for {site}")
+
+            # if all sites don't work, log events to Sentry
+            logger.critical("Iterated through all sites but no one works")
+            return json.dumps({"message": "Something went Wrong", "error_id": "unknown_error"}), 500
 
         return json.dumps({"message": f"category {category} is not supported", "error_id": "unsupported_category"}), 501
 

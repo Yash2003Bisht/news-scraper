@@ -1,4 +1,3 @@
-import random
 from typing import List, Tuple
 
 from scraper import *
@@ -18,8 +17,8 @@ def supported_category(category: str) -> bool:
     return False
 
 
-def get_site_name_and_url(category: str) -> List[Tuple]:
-    """Returns the site name and the url structure for the category
+def get_all_site_name_and_url(category: str) -> List[Tuple]:
+    """Returns the list of site name and the url structure for the category
 
     Args:
         category (str): category name
@@ -27,7 +26,7 @@ def get_site_name_and_url(category: str) -> List[Tuple]:
     Returns:
         List[Tuple]: List of tuple, each tuple contains two things site name and  url structure
     """
-    return random.choice(categories.get(category))
+    return categories.get(category)
 
 
 def get_object(site: str):
