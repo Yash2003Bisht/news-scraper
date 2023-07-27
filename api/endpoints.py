@@ -34,7 +34,7 @@ def get_headline():
 
                 # handle AttributeError and log a message
                 except AttributeError:
-                    logger.error(f"Attribute Error for {site}")
+                    logger.debug(f"Attribute Error for {site}")
 
             # if all sites don't work, log events to Sentry
             logger.critical("Iterated through all sites but no one works")
