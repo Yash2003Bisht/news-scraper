@@ -24,19 +24,45 @@ categories = {
     # ------------------------------ Technology -----------------------------
     "tech": [("money-control", "news/technology/"), ("mint", "technology")],
 
+    # ------------------------------ Sports ------------------------------
+    "sports": [("hindustantimes", "cricket")],
+    "cricket": [("hindustantimes", "cricket")],
+
     # ------------------------------ General News ----------------------------
-    "latest-news": [("money-control", "news/news-all/"), ("mint", "latest-news"), ("ndtv", "latest")],
-    "news": [("money-control", "news/news-all/"), ("mint", "news"), ("ndtv", "latest")],  # ("business-today", "")
-    "india": [("money-control", "news/india/"), ("ndtv", "india")],
-    "world": [("money-control", "news/world/"), ("ndtv", "world-news")],
+    "latest-news": [("money-control", "news/news-all/"), ("mint", "latest-news"), ("ndtv", "latest"),
+                    ("hindustantimes", "latest-news")],
+    "news": [("money-control", "news/news-all/"), ("mint", "news"), ("ndtv", "latest"),
+             ("hindustantimes", "latest-news")],  # ("business-today", "")
+    "india": [("money-control", "news/india/"), ("ndtv", "india"), ("hindustantimes", "india-news")],
+    "world": [("money-control", "news/world/"), ("ndtv", "world-news", ("hindustantimes", "world-news"))],
 
     # ------------------ Entertainment, Lifestyle & Health -------------------
-    "entertainment": [("money-control", "news/trends/entertainment/")],
-    "lifestyle": [("money-control", "news/trends/lifestyle/")],
+    "entertainment": [("money-control", "news/trends/entertainment/"), ("hindustantimes", "entertainment")],
+    "lifestyle": [("money-control", "news/trends/lifestyle/"), ("hindustantimes", "lifestyle")],
     "health": [("money-control", "news/health-and-fitness/")],
     "trends": [("money-control", "news/trends/")],
     "photos": [("money-control", "news/photos/")],
     "travel": [("money-control", "news/trends/travel/")],
+
+    # ------------------------------ Cities News ------------------------------
+    "delhi": [("hindustantimes", "cities/delhi-news")],
+    "mumbai": [("hindustantimes", "cities/mumbai-news")],
+    "bengaluru": [("hindustantimes", "cities/bengaluru-news")],
+    "gurugram": [("hindustantimes", "cities/gurugram-news")],
+    "noida": [("hindustantimes", "cities/noida-news")],
+    "hyderabad": [("hindustantimes", "topic/hyderabad")],
+    "chennai": [("hindustantimes", "topic/chennai")],
+    "kolkata": [("hindustantimes", "cities/kolkata-news")],
+    "bhopal": [("hindustantimes", "cities/bhopal-news")],
+    "chandigarh": [("hindustantimes", "cities/chandigarh-news")],
+    "dehradun": [("hindustantimes", "cities/dehradun-news")],
+    "indore": [("hindustantimes", "cities/indore-news")],
+    "jaipur": [("hindustantimes", "cities/jaipur-news")],
+    "lucknow": [("hindustantimes", "cities/lucknow-news")],
+    "patna": [("hindustantimes", "cities/patna-news")],
+    "pune": [("hindustantimes", "cities/pune-news")],
+    "ranchi": [("hindustantimes", "cities/ranchi-news")],
+    "others": [("hindustantimes", "cities/others-news")],
 
     # ------------------------------- Others --------------------------------
     "infographic": [("money-control", "news/infographic/")],
@@ -50,7 +76,7 @@ categories = {
     "offbeat": [("ndtv", "offbeat")],
     "feature": [("ndtv", "feature")]
 }
-sites = ["money-control", "mint", "ndtv"]
+sites = ["money-control", "mint", "ndtv", "hindustantimes"]
 supported_categories = categories.keys()
 # --------------------------------------------------------------------------------------------
 

@@ -343,6 +343,42 @@ class StocksMarket(BaseScraper):
         return indices
 
 
+class HindustanTimes(BaseScraper):
+
+    def __init__(self) -> None:
+        """Constructor"""
+        super().__init__(host="hindustantimes.com")
+
+    def get_headline(self) -> Dict:
+        """Get the headline
+
+        Returns:
+            Dict: News title, description & url
+        """
+        if not self.url_structure:
+            raise Exception("Unspecified URL structure, please specify a url.")
+
+        # load soup object
+        self.soup = self.get_soup_object()
+
+        headline: Tag = self.soup.find("h3", {"class": "hdg3"})
+        title: str = headline.a.get_text()
+        referral_link: str = headline.a.get("href")
+        url: str = self.base_url + referral_link
+
+        # visiting the article url to scrape the description
+        self.follow(referral_link)
+
+        description: str = self.soup.find("h2", {"class": "sortDec"}).get_text()
+
+        return {
+            "title": title,
+            "description": description,
+            "url": url
+        }
+
+
 if __name__ == "__main__":
-    stocks_market = StocksMarket()
-    print(stocks_market.market_stats())
+    hindustan_times = HindustanTimes()
+    hindustan_times.url_structure = "lifestyle"
+    print(hindustan_times.get_headline())

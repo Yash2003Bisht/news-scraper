@@ -40,6 +40,8 @@ def get_object(site: str):
             return Mint()
         case "ndtv":
             return NDTV()
+        case "hindustantimes":
+            return HindustanTimes()
         # case "business-today":
         #     return BusinessToday()
         case _:
