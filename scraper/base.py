@@ -79,6 +79,8 @@ class BaseScraper:
         # Below check is to handle the case where we need to switch to another host/subdomain/url.
         # Although this is not the right way to handle this, it will update in the future.
         if self.url_structure and not self.url_structure.startswith("http"):
+            # check if url_structure starts with "/", if so remove it
+            self.url_structure = self.url_structure[1:] if self.url_structure.startswith("/") else self.url_structure
             url: str = os.path.join(self.base_url, self.url_structure)
         elif self.url_structure:
             url: str = self.url_structure
