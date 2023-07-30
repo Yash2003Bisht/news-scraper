@@ -42,6 +42,9 @@ logger.addHandler(ch)
 # -----------------------------------------
 
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+HEADLINE_DATA_FILE = os.path.join(BASE_DIR, "headlines_data.json")
+
 app = Flask(__name__)
 
 

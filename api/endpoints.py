@@ -30,7 +30,15 @@ def get_headline():
                     scraper_obj = get_object(site)
                     scraper_obj.follow(url)
                     headline: Dict = scraper_obj.get_headline()
-                    return json.dumps({"message": f"success", "data": headline}), 200
+                    title = headline["title"]
+
+                    # Check if this headline is repeated
+                    if not repeated_headline(site, title):
+                        # Add this headline to headline_data.json file
+                        add_headline(site, title)
+                        return json.dumps({"message": f"success", "data": headline}), 200
+
+                    logger.info(f"Skipping {site} - repeated headline")
 
                 # handle AttributeError and log a message
                 except AttributeError:
