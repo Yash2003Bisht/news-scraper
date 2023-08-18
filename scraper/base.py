@@ -1,7 +1,7 @@
 import random
 import time
 import os
-from typing import Dict, Union, List
+from typing import Dict, Union, List, Callable
 
 import requests
 from requests.models import Response
@@ -26,7 +26,9 @@ class BaseScraper:
             max_retries: int = 5,
             headers: Dict = None,
             backoff_time: int = 1,
-            parser: str = "lxml"
+            parser: str = "lxml",
+            update_user_agent: bool = False,
+            user_agents: Union[str, List] = None,
     ) -> None:
         """Constructor
 
@@ -38,6 +40,9 @@ class BaseScraper:
             headers (Dict, optional): The headers to send with the request. Defaults to None.
             backoff_time (int, optional): The initial backoff time in seconds between retries. Defaults to 1.
             parser (str, optional): Desirable features of the parser to be used. Defaults to "lxml".
+            update_user_agent (bool, optional): Update User-Agent if request was failed. Defaults to False
+            user_agents ([str, list], optional): User-Agent string or a list of User-Agents. Keep it None to use
+                                                 default User-Agents
         """
         self.url_structure = url_structure
         self.method = method.lower()
@@ -46,6 +51,8 @@ class BaseScraper:
         self.backoff_time = backoff_time
         self.parser = parser
         self.session: Session = requests.session()
+        self.update_user_agent = update_user_agent
+        self.user_agents = user_agents
         self.soup = None  # Stores Beautiful soup object
         self.json_data = None  # Stores Json data
         self.base_url = None  # Stores base url ex. https://testing.com
@@ -59,12 +66,18 @@ class BaseScraper:
             self.base_url = f"https://{host}"
 
     @staticmethod
-    def get_random_user_agent() -> str:
+    def get_random_user_agent(user_agents: List = None) -> str:
         """Generates a random user agents
+
+        Args:
+            user_agents (List, optional): List of custom User-Agents to choose from
 
         Returns:
             str: Random user agent
         """
+        if user_agents:
+            return random.choice(user_agents)
+
         return random.choice(USER_AGENTS)["User-Agent"]
 
     def make_reqeust(self) -> Union[Response, None]:
@@ -87,24 +100,22 @@ class BaseScraper:
         else:
             url = self.base_url
 
-        # Check if User-Agent is present in the header, add it if not present
-        if not self.headers.get("User-Agent"):
-            self.headers["User-Agent"] = self.get_random_user_agent()
-
-        # update the session headers
-        self.session.headers.update(self.headers)
-
-        # bound the session object with specified method
-        session_method = getattr(self.session, self.method)
+        # Create session
+        session_method = self.create_session()
 
         for _ in range(self.max_retries):
             response: Response = session_method(url)
 
             if response.ok:
                 return response
-            else:
+            elif _ < self.max_retries-1:
                 time.sleep(delay)
                 delay *= 2
+
+                # check if we are allowed to update User-Agents
+                if self.update_user_agent:
+                    # update session method
+                    session_method = self.create_session()
 
         return None
 
@@ -126,6 +137,31 @@ class BaseScraper:
         """
         resp: Response = self.make_reqeust()
         return resp.json()
+
+    def create_session(self) -> Callable:
+        """Creates the session
+
+        Returns:
+            function: session function with bounded method (get, post, etc.)
+        """
+        # check the isinstance
+        if isinstance(self.user_agents, str):
+            # if user_agents is instance of str than change it to list
+            self.user_agents = [self.user_agents]
+
+        # update User-Agent
+        if not self.user_agents:
+            self.headers["User-Agent"] = self.get_random_user_agent()
+        else:
+            self.headers["User-Agent"] = self.get_random_user_agent(self.user_agents)
+
+        # update the session headers
+        self.session.headers.update(self.headers)
+
+        # bound the session object with specified method
+        session_method = getattr(self.session, self.method)
+
+        return session_method
 
     def follow(self, url_structure: str, method: str = "get", data_type: str = "soup") -> None:
         """Use this method to update the soup/json object
