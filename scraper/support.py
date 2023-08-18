@@ -8,10 +8,11 @@ categories = {
 
     # ---------------- Business, Investing & Stock Market ----------------
     "business": [("money-control", "news/business/")],
-    "companies": [("money-control", "news/tags/companies.html"), ("mint", "companies")],
+    "companies": [("money-control", "news/tags/companies.html"), ("mint", "companies"),
+                  ("business-standard", "companies")],
     "mutual-funds": [("money-control", "news/business/mutual-funds"), ("mint", "mutual-fund")],
     "startups": [("money-control", "news/business/startups/")],
-    "market": [("money-control", "news/business/markets/"), ("mint", "market")],
+    "market": [("money-control", "news/business/markets/"), ("mint", "market"), ("business-standard", "markets")],
     "stocks": [("money-control", "news/business/stocks/")],
     "ipo": [("money-control", "news/business/ipo/")],
     "technical-analysis": [("money-control", "news/tags/technical-analysis.html")],
@@ -19,30 +20,35 @@ categories = {
     "fixed-deposite": [("money-control", "news/tags/company-fixed-deposits.html")],
     "currency": [("money-control", "news/tags/currency.html")],
     "money": [("mint", "money")],
-    "industry": [("mint", "industry")],
+    "industry": [("mint", "industry"), ("business-standard", "industry")],
+    "management": [("business-standard", "management")],
 
     # ------------------------------ Technology -----------------------------
     "tech": [("money-control", "news/technology/"), ("mint", "technology")],
 
     # ------------------------------ Sports ------------------------------
-    "sports": [("hindustantimes", "cricket")],
+    "sports": [("hindustantimes", "cricket"), ("business-standard", "sports")],
     "cricket": [("hindustantimes", "cricket")],
 
     # ------------------------------ General News ----------------------------
     "latest-news": [("money-control", "news/news-all/"), ("mint", "latest-news"), ("ndtv", "latest"),
-                    ("hindustantimes", "latest-news")],
+                    ("hindustantimes", "latest-news"), ("business-standard", "latest-news")],
     "news": [("money-control", "news/news-all/"), ("mint", "news"), ("ndtv", "latest"),
-             ("hindustantimes", "latest-news")],  # ("business-today", "")
-    "india": [("money-control", "news/india/"), ("ndtv", "india"), ("hindustantimes", "india-news")],
+             ("hindustantimes", "latest-news"), ("business-standard", "latest-news")],  # ("business-today", "")
+    "india": [("money-control", "news/india/"), ("ndtv", "india"), ("hindustantimes", "india-news"),
+              ("business-standard", "indian-news")],
     "world": [("money-control", "news/world/"), ("ndtv", "world-news", ("hindustantimes", "world-news"))],
 
     # ------------------ Entertainment, Lifestyle & Health -------------------
-    "entertainment": [("money-control", "news/trends/entertainment/"), ("hindustantimes", "entertainment")],
-    "lifestyle": [("money-control", "news/trends/lifestyle/"), ("hindustantimes", "lifestyle")],
-    "health": [("money-control", "news/health-and-fitness/")],
+    "entertainment": [("money-control", "news/trends/entertainment/"), ("hindustantimes", "entertainment"),
+                      ("business-standard", "entertainment")],
+    "lifestyle": [("money-control", "news/trends/lifestyle/"), ("hindustantimes", "lifestyle"),
+                  ("business-standard", "lifestyle")],
+    "health": [("money-control", "news/health-and-fitness/"), ("business-standard", "health")],
     "trends": [("money-control", "news/trends/")],
     "photos": [("money-control", "news/photos/")],
     "travel": [("money-control", "news/trends/travel/")],
+    "social-media": [("business-standard", "social-viral")],
 
     # ------------------------------ Cities News ------------------------------
     "delhi": [("hindustantimes", "cities/delhi-news")],
@@ -63,20 +69,26 @@ categories = {
     "pune": [("hindustantimes", "cities/pune-news")],
     "ranchi": [("hindustantimes", "cities/ranchi-news")],
     "others": [("hindustantimes", "cities/others-news")],
+    "cities": [("ndtv", "cities")],
+
+    # ------------------------------ Politics ------------------------------
+    "politics": [("money-control", "news/politics/"), ("business-standard", "politics")],
+    "elections": [("business-standard", "elections")],
+
+    # ------------------------------ Education ------------------------------
+    "science": [("money-control", "news/tags/science.html")],
+    "books": [("money-control", "news/tags/books.html"), ("business-standard", "book")],
+    "infographic": [("money-control", "news/infographic/")],
+    "education": [("money-control", "news/tags/education.html"), ("ndtv", "education"),
+                  ("business-standard", "education")],
 
     # ------------------------------- Others --------------------------------
-    "infographic": [("money-control", "news/infographic/")],
-    "books": [("money-control", "news/tags/books.html")],
-    "politics": [("money-control", "news/politics/")],
-    "science": [("money-control", "news/tags/science.html")],
-    "education": [("money-control", "news/tags/education.html"), ("ndtv", "education")],
     "premium": [("mint", "premium")],
     "opinion": [("mint", "opinion"), ("ndtv", "opinion")],
-    "cities": [("ndtv", "cities")],
     "offbeat": [("ndtv", "offbeat")],
-    "feature": [("ndtv", "feature")]
+    "feature": [("ndtv", "feature")],
 }
-sites = ["money-control", "mint", "ndtv", "hindustantimes"]
+sites = ["money-control", "mint", "ndtv", "hindustantimes", "business-standard"]
 supported_categories = categories.keys()
 # --------------------------------------------------------------------------------------------
 
