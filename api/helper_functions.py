@@ -49,6 +49,8 @@ def get_object(site: str) -> Any:
             return NDTV()
         case "hindustantimes":
             return HindustanTimes()
+        case "business-standard":
+            return BusinessStandard()
         # case "business-today":
         #     return BusinessToday()
         case _:
