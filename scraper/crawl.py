@@ -378,7 +378,63 @@ class HindustanTimes(BaseScraper):
         }
 
 
+class BusinessStandard(BaseScraper):
+    def __init__(self) -> None:
+        """Constructor"""
+
+        # since business-standard.com doesn't support all User-Agents
+        # so, this is a list of some User-Agents which business-standard.com is supported
+        user_agents = [
+            "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.3; Win64; x64; Trident/7.0; .NET4.0E; .NET4.0C; "
+            ".NET CLR 3.5.30729; .NET CLR 2.0.50727; .NET CLR 3.0.30729; Microsoft Outlook 15.0.5023; ms-office; "
+            "MSOffice 15)",
+            "Mozilla/5.0 (X11; Linux x86_64; rv:101.0) Gecko/20100101 Firefox/101.0",
+            "Mozilla/5.0 (iPad; CPU OS 8_1_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) "
+            "Version/8.0 Mobile/12B466 Safari/600.1.4",
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/601.7.7 (KHTML, like Gecko) "
+            "Version/9.1.2 Safari/601.7.7"
+        ]
+
+        super().__init__(
+            host="business-standard.com",
+            update_user_agent=True,
+            user_agents=user_agents,
+        )
+
+    def get_headline(self) -> Dict:
+        """Get the headline
+
+        Returns:
+            Dict: News title, description & url
+        """
+        if not self.url_structure:
+            raise Exception("Unspecified URL structure, please specify a url.")
+
+        # load soup object
+        self.soup = self.get_soup_object()
+
+        headline: Tag = self.soup.find("div", {"class": "image-title"})
+        title: str = headline.a.get_text()
+        referral_link: str = headline.a.get("href")
+
+        if not referral_link.startswith("http"):
+            url: str = self.base_url + referral_link
+        else:
+            url: str = referral_link
+
+        # visiting the article url to scrape the description
+        self.follow(referral_link)
+
+        description: str = self.soup.find("h2", {"class": "strydsc"}).get_text()
+
+        return {
+            "title": title,
+            "description": description,
+            "url": url
+        }
+
+
 if __name__ == "__main__":
-    hindustan_times = HindustanTimes()
-    hindustan_times.url_structure = "lifestyle"
-    print(hindustan_times.get_headline())
+    business_standard = BusinessStandard()
+    business_standard.url_structure = "latest-news"
+    print(business_standard.get_headline())
