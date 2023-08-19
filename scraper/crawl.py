@@ -395,10 +395,34 @@ class BusinessStandard(BaseScraper):
             "Version/9.1.2 Safari/601.7.7"
         ]
 
+        # business-standard headers
+        headers = {
+            "Authority": "www.business-standard.com",
+            "Method": "GET",
+            "Scheme": "https",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Accept-Language": "en-GB,en;q=0.9",
+            "Cache-Control": "max-age=0",
+            "Sec-Ch-Ua": '"Not.A/Brand";v="8", "Chromium";v="114", "Brave";v="114"',
+            "Sec-Ch-Ua-Mobile": "?0",
+            "Sec-Ch-Ua-Platform": "Linux",
+            "Sec-Fetch-Dest": "document",
+            "Sec-Fetch-Mode": "navigate",
+            "Sec-Fetch-Site": "same-origin",
+            "Sec-Fetch-User": "?1",
+            "Sec-Gpc": "1",
+            "Upgrade-Insecure-Requests": "1",
+            # X-Forwarded-For is required to run this on the server
+            # they have already blacked listed the servers IP addresses
+            "X-Forwarded-For": "102.214.133.35"
+        }
+
         super().__init__(
             host="business-standard.com",
             update_user_agent=True,
             user_agents=user_agents,
+            headers=headers
         )
 
     def get_headline(self) -> Dict:
@@ -425,7 +449,11 @@ class BusinessStandard(BaseScraper):
         # visiting the article url to scrape the description
         self.follow(referral_link)
 
-        description: str = self.soup.find("h2", {"class": "strydsc"}).get_text()
+        # handle AttributeError
+        try:
+            description: str = self.soup.find("h2", {"class": "strydsc"}).get_text()
+        except AttributeError:
+            description: str = ""
 
         return {
             "title": title,
