@@ -3,3 +3,5 @@ tests
 __pycache__
 TODO
 .env
+build-and-push.sh
+Dockerfile
