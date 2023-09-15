@@ -7,93 +7,141 @@
 categories = {
 
     # ---------------- Business, Investing & Stock Market ----------------
-    "business": [("money-control", "news/business/")],
-    "companies": [("money-control", "news/tags/companies.html"), ("mint", "companies"),
-                  ("business-standard", "companies")],
-    "mutual-funds": [("money-control", "news/business/mutual-funds"), ("mint", "mutual-fund")],
-    "startups": [("money-control", "news/business/startups/")],
-    "market": [("money-control", "news/business/markets/"), ("mint", "market"), ("business-standard", "markets")],
-    "stocks": [("money-control", "news/business/stocks/")],
-    "ipo": [("money-control", "news/business/ipo/")],
-    "technical-analysis": [("money-control", "news/tags/technical-analysis.html")],
-    "commodity": [("money-control", "news/business/commodity/")],
-    "fixed-deposite": [("money-control", "news/tags/company-fixed-deposits.html")],
-    "currency": [("money-control", "news/tags/currency.html")],
-    "money": [("mint", "money")],
-    "industry": [("mint", "industry"), ("business-standard", "industry")],
-    "management": [("business-standard", "management")],
+    "business": [("MoneyControl", "news/business/")],
+    "companies": [("MoneyControl", "news/tags/companies.html"), ("Mint", "companies"),
+                  ("BusinessStandard", "companies")],
+    "mutual-funds": [("MoneyControl", "news/business/mutual-funds"), ("Mint", "mutual-fund")],
+    "startups": [("MoneyControl", "news/business/startups/")],
+    "market": [("MoneyControl", "news/business/markets/"), ("Mint", "market"), ("BusinessStandard", "markets")],
+    "stocks": [("MoneyControl", "news/business/stocks/")],
+    "ipo": [("MoneyControl", "news/business/ipo/")],
+    "technical-analysis": [("MoneyControl", "news/tags/technical-analysis.html")],
+    "commodity": [("MoneyControl", "news/business/commodity/")],
+    "fixed-deposite": [("MoneyControl", "news/tags/company-fixed-deposits.html")],
+    "currency": [("MoneyControl", "news/tags/currency.html")],
+    "money": [("Mint", "money")],
+    "industry": [("Mint", "industry"), ("BusinessStandard", "industry")],
+    "management": [("BusinessStandard", "management")],
 
     # ------------------------------ Technology -----------------------------
-    "tech": [("money-control", "news/technology/"), ("mint", "technology")],
+    "tech": [("MoneyControl", "news/technology/"), ("Mint", "technology"), ("TheHindu", "sci-tech/"),
+             ("TheHindu", "sci-tech/technology/"), ("TheHindu", "sci-tech/technology/gadgets/")],
+    "sci-tech": [("MoneyControl", "news/technology/"), ("Mint", "technology"), ("TheHindu", "sci-tech/"),
+                 ("TheHindu", "sci-tech/technology/"), ("TheHindu", "sci-tech/technology/gadgets/")],
+    "technology": [("MoneyControl", "news/technology/"), ("Mint", "technology"), ("TheHindu", "sci-tech/"),
+                   ("TheHindu", "sci-tech/technology/"), ("TheHindu", "sci-tech/technology/gadgets/")],
+    "gadgets": [("MoneyControl", "news/technology/"), ("Mint", "technology"), ("TheHindu", "sci-tech/"),
+                ("TheHindu", "sci-tech/technology/"), ("TheHindu", "sci-tech/technology/gadgets/")],
+    "internet": [("TheHindu", "sci-tech/technology/internet/")],
 
     # ------------------------------ Sports ------------------------------
-    "sports": [("hindustantimes", "cricket"), ("business-standard", "sports")],
-    "cricket": [("hindustantimes", "cricket")],
+    "sports": [("HindustanTimes", "cricket"), ("BusinessStandard", "sports"), ("TheHindu", "sport")],
+    "cricket": [("HindustanTimes", "cricket"), ("TheHindu", "sport/cricket/")],
+    "football": [("TheHindu", "sport/football/")],
+    "hockey": [("TheHindu", "sport/hockey/")],
+    "tennis": [("TheHindu", "sport/tennis/")],
+    "athletics": [("TheHindu", "sport/athletics/")],
+    "moto-sport": [("TheHindu", "sport/motosport/")],
+    "races": [("TheHindu", "sport/races/")],
 
     # ------------------------------ General News ----------------------------
-    "latest-news": [("money-control", "news/news-all/"), ("mint", "latest-news"), ("ndtv", "latest"),
-                    ("hindustantimes", "latest-news"), ("business-standard", "latest-news")],
-    "news": [("money-control", "news/news-all/"), ("mint", "news"), ("ndtv", "latest"),
-             ("hindustantimes", "latest-news"), ("business-standard", "latest-news")],  # ("business-today", "")
-    "india": [("money-control", "news/india/"), ("ndtv", "india"), ("hindustantimes", "india-news"),
-              ("business-standard", "indian-news")],
-    "world": [("money-control", "news/world/"), ("ndtv", "world-news", ("hindustantimes", "world-news"))],
+    "latest-news": [("MoneyControl", "news/news-all/"), ("Mint", "latest-news"), ("NDTV", "latest"),
+                    ("HindustanTimes", "latest-news"), ("BusinessStandard", "latest-news"), ("TheHindu", "")],
+    "news": [("MoneyControl", "news/news-all/"), ("Mint", "news"), ("NDTV", "latest"),
+             ("HindustanTimes", "latest-news"), ("BusinessStandard", "latest-news"), ("TheHindu", "news")],
+    "india": [("MoneyControl", "news/india/"), ("NDTV", "india"), ("HindustanTimes", "india-news"),
+              ("BusinessStandard", "indian-news"), ("TheHindu", "news/national/")],
+    "national": [("MoneyControl", "news/india/"), ("NDTV", "india"), ("HindustanTimes", "india-news"),
+                 ("BusinessStandard", "indian-news"), ("TheHindu", "news/national/")],
+    "world": [("MoneyControl", "news/world/"), ("NDTV", "world-news"), ("HindustanTimes", "world-news"),
+              ("TheHindu", "news/international/")],
+    "international": [("MoneyControl", "news/world/"), ("NDTV", "world-news"), ("HindustanTimes", "world-news"),
+                      ("TheHindu", "news/international/")],
 
     # ------------------ Entertainment, Lifestyle & Health -------------------
-    "entertainment": [("money-control", "news/trends/entertainment/"), ("hindustantimes", "entertainment"),
-                      ("business-standard", "entertainment")],
-    "lifestyle": [("money-control", "news/trends/lifestyle/"), ("hindustantimes", "lifestyle"),
-                  ("business-standard", "lifestyle")],
-    "health": [("money-control", "news/health-and-fitness/"), ("business-standard", "health")],
-    "trends": [("money-control", "news/trends/")],
-    "photos": [("money-control", "news/photos/")],
-    "travel": [("money-control", "news/trends/travel/")],
-    "social-media": [("business-standard", "social-viral")],
+    "entertainment": [("MoneyControl", "news/trends/entertainment/"), ("HindustanTimes", "entertainment"),
+                      ("BusinessStandard", "entertainment")],
+    "lifestyle": [("MoneyControl", "news/trends/lifestyle/"), ("HindustanTimes", "lifestyle"),
+                  ("BusinessStandard", "lifestyle")],
+    "health": [("MoneyControl", "news/health-and-fitness/"), ("BusinessStandard", "health"),
+               ("TheHindu", "sci-tech/health/")],
+    "trends": [("MoneyControl", "news/trends/")],
+    "photos": [("MoneyControl", "news/photos/")],
+    "travel": [("MoneyControl", "news/trends/travel/")],
+    "social-media": [("BusinessStandard", "social-viral")],
+    "agriculture": [("TheHindu", "sci-tech/agriculture/")],
 
-    # ------------------------------ Cities News ------------------------------
-    "delhi": [("hindustantimes", "cities/delhi-news")],
-    "mumbai": [("hindustantimes", "cities/mumbai-news")],
-    "bengaluru": [("hindustantimes", "cities/bengaluru-news")],
-    "gurugram": [("hindustantimes", "cities/gurugram-news")],
-    "noida": [("hindustantimes", "cities/noida-news")],
-    "hyderabad": [("hindustantimes", "topic/hyderabad")],
-    "chennai": [("hindustantimes", "topic/chennai")],
-    "kolkata": [("hindustantimes", "cities/kolkata-news")],
-    "bhopal": [("hindustantimes", "cities/bhopal-news")],
-    "chandigarh": [("hindustantimes", "cities/chandigarh-news")],
-    "dehradun": [("hindustantimes", "cities/dehradun-news")],
-    "indore": [("hindustantimes", "cities/indore-news")],
-    "jaipur": [("hindustantimes", "cities/jaipur-news")],
-    "lucknow": [("hindustantimes", "cities/lucknow-news")],
-    "patna": [("hindustantimes", "cities/patna-news")],
-    "pune": [("hindustantimes", "cities/pune-news")],
-    "ranchi": [("hindustantimes", "cities/ranchi-news")],
-    "others": [("hindustantimes", "cities/others-news")],
-    "cities": [("ndtv", "cities")],
+    # ------------------------------ States & Cities News ------------------------------
+    "delhi": [("HindustanTimes", "cities/delhi-news"), ("TheHindu", "news/cities/Delhi/")],
+    "mumbai": [("HindustanTimes", "cities/mumbai-news"), ("TheHindu", "news/cities/mumbai/")],
+    "bengaluru": [("HindustanTimes", "cities/bengaluru-news")],
+    "gurugram": [("HindustanTimes", "cities/gurugram-news")],
+    "noida": [("HindustanTimes", "cities/noida-news")],
+    "hyderabad": [("HindustanTimes", "topic/hyderabad"), ("TheHindu", "news/cities/Hyderabad/")],
+    "chennai": [("HindustanTimes", "topic/chennai"), ("TheHindu", "news/cities/chennai/")],
+    "kolkata": [("HindustanTimes", "cities/kolkata-news"), ("TheHindu", "news/cities/kolkata/")],
+    "bhopal": [("HindustanTimes", "cities/bhopal-news")],
+    "chandigarh": [("HindustanTimes", "cities/chandigarh-news")],
+    "dehradun": [("HindustanTimes", "cities/dehradun-news")],
+    "indore": [("HindustanTimes", "cities/indore-news")],
+    "jaipur": [("HindustanTimes", "cities/jaipur-news")],
+    "lucknow": [("HindustanTimes", "cities/lucknow-news")],
+    "patna": [("HindustanTimes", "cities/patna-news")],
+    "pune": [("HindustanTimes", "cities/pune-news")],
+    "ranchi": [("HindustanTimes", "cities/ranchi-news")],
+    "andhra-pradesh": [("TheHindu", "news/national/andhra-pradesh/")],
+    "karnataka": [("TheHindu", "news/national/karnataka/")],
+    "kerala": [("TheHindu", "news/national/kerala/")],
+    "tamil-nadu": [("TheHindu", "news/national/tamil-nadu/")],
+    "telangana": [("TheHindu", "news/national/telangana/")],
+    "bangalore": [("TheHindu", "news/cities/bangalore/")],
+    "coimbatore": [("TheHindu", "news/cities/Coimbatore/")],
+    "kochi": [("TheHindu", "news/cities/Kochi/")],
+    "kozhikode": [("TheHindu", "news/cities/kozhikode/")],
+    "madurai": [("TheHindu", "news/cities/Madurai/")],
+    "mangalore": [("TheHindu", "news/cities/Mangalore/")],
+    "puducherry": [("TheHindu", "news/cities/puducherry/")],
+    "thiruvananthapuram": [("TheHindu", "news/cities/Thiruvananthapuram/")],
+    "tiruchirapalli": [("TheHindu", "news/cities/Tiruchirapalli/")],
+    "vijayawada": [("TheHindu", "news/cities/Vijayawada/")],
+    "visakhapatnam": [("TheHindu", "news/cities/Visakhapatnam/")],
+    "cities": [("NDTV", "cities"), ("TheHindu", "news/cities/")],
+    "states": [("TheHindu", "news/states/")],
 
     # ------------------------------ Politics ------------------------------
-    "politics": [("money-control", "news/politics/"), ("business-standard", "politics")],
-    "elections": [("business-standard", "elections")],
+    "politics": [("MoneyControl", "news/politics/"), ("BusinessStandard", "politics")],
+    "elections": [("BusinessStandard", "elections")],
 
     # ------------------------------ Education ------------------------------
-    "science": [("money-control", "news/tags/science.html")],
-    "books": [("money-control", "news/tags/books.html"), ("business-standard", "book")],
-    "infographic": [("money-control", "news/infographic/")],
-    "education": [("money-control", "news/tags/education.html"), ("ndtv", "education"),
-                  ("business-standard", "education")],
+    "science": [("MoneyControl", "news/tags/science.html"), ("TheHindu", "sci-tech/science/")],
+    "books": [("MoneyControl", "news/tags/books.html"), ("BusinessStandard", "book")],
+    "infographic": [("MoneyControl", "news/infographic/")],
+    "environment": [("TheHindu", "sci-tech/energy-and-environment")],
+    "education": [("MoneyControl", "news/tags/education.html"), ("NDTV", "education"),
+                  ("BusinessStandard", "education")],
 
     # ------------------------------- Others --------------------------------
-    "premium": [("mint", "premium")],
-    "opinion": [("mint", "opinion"), ("ndtv", "opinion")],
-    "offbeat": [("ndtv", "offbeat")],
-    "feature": [("ndtv", "feature")],
+    "premium": [("Mint", "premium")],
+    "opinion": [("Mint", "opinion"), ("NDTV", "opinion")],
+    "interview": [("TheHindu", "opinion/interview/")],
+    "offbeat": [("NDTV", "offbeat")],
+    "feature": [("NDTV", "feature")],
+    "others": [("HindustanTimes", "cities/others-news"), ("TheHindu", "news/national/other-states/"),
+               ("TheHindu", "sport/other-sports/"), ("TheHindu", "data/"), ("TheHindu", "opinion/lead/")],
+
 }
-sites = ["money-control", "mint", "ndtv", "hindustantimes", "business-standard"]
 supported_categories = categories.keys()
+
 # --------------------------------------------------------------------------------------------
 
 
-# ------------------------------------------- MARKET TYPES -------------------------------------------
+# ----------------------------------------- CRAWLERS -----------------------------------------
+crawlers = ["MoneyControl", "Mint", "NDTV", "BusinessStandard", "TheHindu", "HindustanTimes"]
+
+# --------------------------------------------------------------------------------------------
+
+
+# --------------------------------------- MARKET TYPES ---------------------------------------
 market_types = ["market-stats", "most-active-stock", "mutual-funds", "price-volume-shocker", "market-indices"]
 
 # --------------------------------------------------------------------------------------------
