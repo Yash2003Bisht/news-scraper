@@ -23,7 +23,7 @@ class BaseScraper:
             host: str = None,
             url_structure: str = None,
             method: str = "get",
-            max_retries: int = 5,
+            max_retries: int = 1,
             headers: Dict = None,
             backoff_time: int = 1,
             parser: str = "lxml",
