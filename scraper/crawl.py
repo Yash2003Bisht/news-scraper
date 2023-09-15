@@ -462,7 +462,72 @@ class BusinessStandard(BaseScraper):
         }
 
 
+class TheHindu(BaseScraper):
+    def __init__(self) -> None:
+        """Constructor"""
+        super().__init__(host="thehindu.com")
+
+    def get_headline(self):
+        """Get the headline
+
+        Returns:
+            Dict: News title, description & url
+        """
+        if self.url_structure:
+            return self.get_headline_m2()
+
+        # load soup object
+        self.soup = self.get_soup_object()
+
+        headline: Tag = self.soup.find("li", {"class": "time-list active"})
+        title: str = headline.a.get_text().split("\n")[3]
+        referral_link: str = headline.a.get("href")
+
+        if not referral_link.startswith("http"):
+            url: str = self.base_url + referral_link
+        else:
+            url: str = referral_link
+
+        # visiting the article url to scrape the description
+        self.follow(referral_link)
+
+        # handle AttributeError
+        try:
+            description: str = self.soup.find("h1", {"class": "title"}).get_text().strip()
+        except AttributeError:
+            description: str = ""
+
+        return {
+            "title": title,
+            "description": description,
+            "url": url
+        }
+
+    def get_headline_m2(self):
+        """Get the headline 2nd method
+
+        Returns:
+            Dict: News title, description & url
+        """
+        if not self.url_structure:
+            raise Exception("Unspecified URL structure, please specify a url.")
+
+        # load soup object
+        self.soup = self.get_soup_object()
+
+        headline: Tag = self.soup.find("div", {"class": "element main-row-element"})
+        description = headline.div.find("div", {"class": "sub-text"}).get_text().strip()
+        title = headline.h3.get_text().strip()
+        url = headline.h3.a.get("href")
+
+        return {
+            "title": title,
+            "description": description,
+            "url": url
+        }
+
+
 if __name__ == "__main__":
-    business_standard = BusinessStandard()
-    business_standard.url_structure = "latest-news"
-    print(business_standard.get_headline())
+    the_hindu = TheHindu()
+    the_hindu.url_structure = "opinion/interview/"
+    print(the_hindu.get_headline())
