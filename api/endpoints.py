@@ -1,4 +1,3 @@
-import json
 import random
 from typing import Dict
 
@@ -18,34 +17,34 @@ def get_headline():
         category = data["category"]
 
         if supported_category(category):
-            # get & randomly shuffle all sites and URLs for the category
-            sites_and_urls = get_all_site_name_and_url(category)
-            random.shuffle(sites_and_urls)
+            # get & randomly shuffle all crawlers and url-slugs for the category
+            crawlers_and_slugs = get_crawlers_name_and_slugs(category)
+            random.shuffle(crawlers_and_slugs)
 
-            # iterate through all sites and URLs, and return whichever works
-            for site_url in sites_and_urls:
-                site, url = site_url
+            # iterate through all crawlers and url-slugs, and return whichever works
+            for crawler__slug in crawlers_and_slugs:
+                crawler, slug = crawler__slug
 
                 try:
-                    scraper_obj = get_object(site)
-                    scraper_obj.follow(url)
+                    scraper_obj = get_object(crawler)
+                    scraper_obj.follow(slug)
                     headline: Dict = scraper_obj.get_headline()
                     title = headline["title"]
 
                     # Check if this headline is repeated
-                    if not repeated_headline(site, title):
+                    if not repeated_headline(crawler, title):
                         # Add this headline to headline_data.json file
-                        add_headline(site, title)
+                        add_headline(crawler, title)
                         return json.dumps({"message": f"success", "data": headline}), 200
 
-                    logger.info(f"Skipping {site} - repeated headline")
+                    logger.info(f"Skipping {crawler} - repeated headline")
 
                 # handle AttributeError and log a message
                 except AttributeError:
-                    logger.warning(f"Attribute Error for {site}")
+                    logger.warning(f"Attribute Error for {crawler}")
 
-            # if all sites don't work, log events to Sentry
-            logger.critical("Iterated through all sites but no one works")
+            # if all slugs don't work, log events to Sentry
+            logger.critical("Iterated through all slugs but no one works")
             return json.dumps({"message": "Something went Wrong", "error_id": "unknown_error"}), 500
 
         return json.dumps({"message": f"category {category} is not supported", "error_id": "unsupported_category"}), 501

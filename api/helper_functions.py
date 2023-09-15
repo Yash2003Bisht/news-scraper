@@ -1,7 +1,7 @@
 import logging
 import os
 import json
-from typing import List, Tuple, Any
+from typing import List, Tuple
 
 from scraper import *
 from . import HEADLINE_DATA_FILE
@@ -21,7 +21,7 @@ def supported_category(category: str) -> bool:
     return False
 
 
-def get_all_site_name_and_url(category: str) -> List[Tuple]:
+def get_crawlers_name_and_slugs(category: str) -> List[Tuple]:
     """Returns the list of site name and the url structure for the category
 
     Args:
@@ -33,35 +33,23 @@ def get_all_site_name_and_url(category: str) -> List[Tuple]:
     return categories.get(category)
 
 
-def get_object(site: str) -> Any:
+def get_object(crawler: str) -> BaseScraper:
     """Returns a site object for scraping news
 
     Args:
-        site (str): name of the site
+        crawler (str): name of the crawler
 
     Returns:
-        Any: News scraper object
+        BaseScraper: News scraper object
     """
-    match site:
-        case "mint":
-            return Mint()
-        case "ndtv":
-            return NDTV()
-        case "hindustantimes":
-            return HindustanTimes()
-        case "business-standard":
-            return BusinessStandard()
-        # case "business-today":
-        #     return BusinessToday()
-        case _:
-            return MoneyControl()
+    return vars(globals()["crawl"])[crawler]()
 
 
-def repeated_headline(site: str, headline_title: str) -> bool:
+def repeated_headline(crawler: str, headline_title: str) -> bool:
     """Checks if a headline is repeated
 
     Args:
-        site (str): Site name
+        crawler (str): crawler name
         headline_title (str): Headline title
 
     Returns:
@@ -72,18 +60,18 @@ def repeated_headline(site: str, headline_title: str) -> bool:
         with open(HEADLINE_DATA_FILE) as headlines:
             try:
                 headlines = json.load(headlines)
-                return headlines.get(site) == headline_title
+                return headlines.get(crawler) == headline_title
             # Catch JSONDecodeError, it can be raised if the file is empty
             except json.JSONDecodeError:
                 pass
     return False
 
 
-def add_headline(site: str, headline_title: str) -> None:
+def add_headline(crawler: str, headline_title: str) -> None:
     """Adds a headline to headline_data.json
 
     Args:
-        site (str): Site name
+        crawler (str): crawler name
         headline_title (str): Headline title
     """
 
@@ -101,8 +89,8 @@ def add_headline(site: str, headline_title: str) -> None:
 
     # Check if this headline is already in the headline_data.json file.
     # This should never happen since we have already checked this condition on the "repeated_headline" function
-    if headlines.get(site) != headline_title:
-        headlines[site] = headline_title
+    if headlines.get(crawler) != headline_title:
+        headlines[crawler] = headline_title
 
         with open(HEADLINE_DATA_FILE, "w") as headline_fp_write:
             json.dump(headlines, headline_fp_write, indent=4)
