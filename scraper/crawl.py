@@ -414,7 +414,7 @@ class BusinessStandard(BaseScraper):
             "Sec-Gpc": "1",
             "Upgrade-Insecure-Requests": "1",
             # X-Forwarded-For is required to run this on the server
-            # they have already blacked listed the servers IP addresses
+            # they have already blacklist the servers IP addresses
             "X-Forwarded-For": "102.214.133.35"
         }
 
