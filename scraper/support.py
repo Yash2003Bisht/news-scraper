@@ -7,21 +7,26 @@
 categories = {
 
     # ---------------- Business, Investing & Stock Market ----------------
-    "business": [("MoneyControl", "news/business/")],
+    "business": [("MoneyControl", "news/business/"), ("FinancialExpress", "business/industry/"),
+                 ("FinancialExpress", "business/sme/"), ("FinancialExpress", "business/banking-finance/"),
+                 ("FinancialExpress", "business/roadways/"), ("FinancialExpress", "business/airlines-aviation/"),
+                 ("FinancialExpress", "business/railways/"), ("FinancialExpress", "business/infrastructure/")],
     "companies": [("MoneyControl", "news/tags/companies.html"), ("Mint", "companies"),
                   ("BusinessStandard", "companies")],
     "mutual-funds": [("MoneyControl", "news/business/mutual-funds"), ("Mint", "mutual-fund")],
     "startups": [("MoneyControl", "news/business/startups/")],
-    "market": [("MoneyControl", "news/business/markets/"), ("Mint", "market"), ("BusinessStandard", "markets")],
+    "market": [("MoneyControl", "news/business/markets/"), ("Mint", "market"), ("BusinessStandard", "markets"),
+               ("FinancialExpress", "market/")],
     "stocks": [("MoneyControl", "news/business/stocks/")],
     "ipo": [("MoneyControl", "news/business/ipo/")],
     "technical-analysis": [("MoneyControl", "news/tags/technical-analysis.html")],
     "commodity": [("MoneyControl", "news/business/commodity/")],
     "fixed-deposite": [("MoneyControl", "news/tags/company-fixed-deposits.html")],
     "currency": [("MoneyControl", "news/tags/currency.html")],
-    "money": [("Mint", "money")],
-    "industry": [("Mint", "industry"), ("BusinessStandard", "industry")],
+    "money": [("Mint", "money"), ("FinancialExpress", "money/")],
+    "industry": [("Mint", "industry"), ("BusinessStandard", "industry"), ("FinancialExpress", "business/industry/")],
     "management": [("BusinessStandard", "management")],
+    "banking": [("FinancialExpress", "business/banking-finance/")],
 
     # ------------------------------ Technology -----------------------------
     "tech": [("MoneyControl", "news/technology/"), ("Mint", "technology"), ("TheHindu", "sci-tech/"),
@@ -29,7 +34,8 @@ categories = {
     "sci-tech": [("MoneyControl", "news/technology/"), ("Mint", "technology"), ("TheHindu", "sci-tech/"),
                  ("TheHindu", "sci-tech/technology/"), ("TheHindu", "sci-tech/technology/gadgets/")],
     "technology": [("MoneyControl", "news/technology/"), ("Mint", "technology"), ("TheHindu", "sci-tech/"),
-                   ("TheHindu", "sci-tech/technology/"), ("TheHindu", "sci-tech/technology/gadgets/")],
+                   ("TheHindu", "sci-tech/technology/"), ("TheHindu", "sci-tech/technology/gadgets/"),
+                   ("FinancialExpress", "about/business-technology/")],
     "gadgets": [("MoneyControl", "news/technology/"), ("Mint", "technology"), ("TheHindu", "sci-tech/"),
                 ("TheHindu", "sci-tech/technology/"), ("TheHindu", "sci-tech/technology/gadgets/")],
     "internet": [("TheHindu", "sci-tech/technology/internet/")],
@@ -46,11 +52,13 @@ categories = {
 
     # ------------------------------ General News ----------------------------
     "latest-news": [("MoneyControl", "news/news-all/"), ("Mint", "latest-news"), ("NDTV", "latest"),
-                    ("HindustanTimes", "latest-news"), ("BusinessStandard", "latest-news"), ("TheHindu", "")],
+                    ("HindustanTimes", "latest-news"), ("BusinessStandard", "latest-news"), ("TheHindu", ""),
+                    ("FinancialExpress", "latest-news")],
     "news": [("MoneyControl", "news/news-all/"), ("Mint", "news"), ("NDTV", "latest"),
-             ("HindustanTimes", "latest-news"), ("BusinessStandard", "latest-news"), ("TheHindu", "news")],
+             ("HindustanTimes", "latest-news"), ("BusinessStandard", "latest-news"), ("TheHindu", "news"),
+             ("FinancialExpress", "latest-news")],
     "india": [("MoneyControl", "news/india/"), ("NDTV", "india"), ("HindustanTimes", "india-news"),
-              ("BusinessStandard", "indian-news"), ("TheHindu", "news/national/")],
+              ("BusinessStandard", "indian-news"), ("TheHindu", "news/national/"), ("FinancialExpress", "india-news")],
     "national": [("MoneyControl", "news/india/"), ("NDTV", "india"), ("HindustanTimes", "india-news"),
                  ("BusinessStandard", "indian-news"), ("TheHindu", "news/national/")],
     "world": [("MoneyControl", "news/world/"), ("NDTV", "world-news"), ("HindustanTimes", "world-news"),
@@ -64,7 +72,7 @@ categories = {
     "lifestyle": [("MoneyControl", "news/trends/lifestyle/"), ("HindustanTimes", "lifestyle"),
                   ("BusinessStandard", "lifestyle")],
     "health": [("MoneyControl", "news/health-and-fitness/"), ("BusinessStandard", "health"),
-               ("TheHindu", "sci-tech/health/")],
+               ("TheHindu", "sci-tech/health/"), ("FinancialExpress", "lifestyle/health/")],
     "trends": [("MoneyControl", "news/trends/")],
     "photos": [("MoneyControl", "news/photos/")],
     "travel": [("MoneyControl", "news/trends/travel/")],
@@ -109,16 +117,18 @@ categories = {
     "states": [("TheHindu", "news/states/")],
 
     # ------------------------------ Politics ------------------------------
-    "politics": [("MoneyControl", "news/politics/"), ("BusinessStandard", "politics")],
+    "politics": [("MoneyControl", "news/politics/"), ("BusinessStandard", "politics"),
+                 ("FinancialExpress", "policy/economy/")],
     "elections": [("BusinessStandard", "elections")],
 
     # ------------------------------ Education ------------------------------
-    "science": [("MoneyControl", "news/tags/science.html"), ("TheHindu", "sci-tech/science/")],
+    "science": [("MoneyControl", "news/tags/science.html"), ("TheHindu", "sci-tech/science/"),
+                ("FinancialExpress", "life/science/")],
     "books": [("MoneyControl", "news/tags/books.html"), ("BusinessStandard", "book")],
     "infographic": [("MoneyControl", "news/infographic/")],
     "environment": [("TheHindu", "sci-tech/energy-and-environment")],
     "education": [("MoneyControl", "news/tags/education.html"), ("NDTV", "education"),
-                  ("BusinessStandard", "education")],
+                  ("BusinessStandard", "education"), ("FinancialExpress", "jobs-career/education/")],
 
     # ------------------------------- Others --------------------------------
     "premium": [("Mint", "premium")],
@@ -128,7 +138,12 @@ categories = {
     "feature": [("NDTV", "feature")],
     "others": [("HindustanTimes", "cities/others-news"), ("TheHindu", "news/national/other-states/"),
                ("TheHindu", "sport/other-sports/"), ("TheHindu", "data/"), ("TheHindu", "opinion/lead/")],
-
+    "cloud-verse": [("FinancialExpress", "about/cloud-verse/")],
+    "safety-privacy": [("FinancialExpress", "about/safety-privacy/")],
+    "artificial-intelligence": [("FinancialExpress", "about/artificial-intelligence/")],
+    "information-governance": [("FinancialExpress", "about/information-governance/")],
+    "sme": [("FinancialExpress", "business/sme/")],
+    "economy": [("FinancialExpress", "policy/economy/")],
 }
 supported_categories = categories.keys()
 
@@ -136,7 +151,8 @@ supported_categories = categories.keys()
 
 
 # ----------------------------------------- CRAWLERS -----------------------------------------
-crawlers = ["MoneyControl", "Mint", "NDTV", "BusinessStandard", "TheHindu", "HindustanTimes"]
+crawlers = ["MoneyControl", "Mint", "NDTV", "BusinessStandard", "TheHindu", "HindustanTimes",
+            "FinancialExpress"]
 
 # --------------------------------------------------------------------------------------------
 
