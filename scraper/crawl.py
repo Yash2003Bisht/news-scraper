@@ -545,9 +545,9 @@ class FinancialExpress(BaseScraper):
         self.soup = self.get_soup_object()
 
         headline: Tag = self.soup.find_all("div", {"class": "entry-wrapper"})[1]
-        title: str = headline.h2.get_text()
+        title: str = headline.a.get_text()
         description: str = headline.find("div", {"class": "hide-for-small-only post-excerpt"}).get_text()
-        url: str = headline.h2.a.get("href")
+        url: str = headline.a.get("href")
 
         return {
             "title": title,
@@ -558,5 +558,5 @@ class FinancialExpress(BaseScraper):
 
 if __name__ == "__main__":
     financial_express = FinancialExpress()
-    financial_express.url_structure = "business/industry/"
+    financial_express.url_structure = "business/banking-finance/"
     print(financial_express.get_headline())
