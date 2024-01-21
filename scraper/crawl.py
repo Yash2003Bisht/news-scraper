@@ -527,7 +527,36 @@ class TheHindu(BaseScraper):
         }
 
 
+class FinancialExpress(BaseScraper):
+    def __init__(self) -> None:
+        """Constructor"""
+        super().__init__(host="financialexpress.com")
+
+    def get_headline(self):
+        """Get the headline
+
+        Returns:
+            Dict: News title, description & url
+        """
+        if not self.url_structure:
+            raise Exception("Unspecified URL structure, please specify a url.")
+
+        # load soup object
+        self.soup = self.get_soup_object()
+
+        headline: Tag = self.soup.find_all("div", {"class": "entry-wrapper"})[1]
+        title: str = headline.h2.get_text()
+        description: str = headline.find("div", {"class": "hide-for-small-only post-excerpt"}).get_text()
+        url: str = headline.h2.a.get("href")
+
+        return {
+            "title": title,
+            "description": description,
+            "url": url
+        }
+
+
 if __name__ == "__main__":
-    the_hindu = TheHindu()
-    the_hindu.url_structure = "opinion/interview/"
-    print(the_hindu.get_headline())
+    financial_express = FinancialExpress()
+    financial_express.url_structure = "business/industry/"
+    print(financial_express.get_headline())
