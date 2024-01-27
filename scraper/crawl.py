@@ -556,7 +556,40 @@ class FinancialExpress(BaseScraper):
         }
 
 
+class ANI(BaseScraper):
+    def __init__(self) -> None:
+        """Constructor"""
+        super().__init__(host="aninews.in")
+
+    def get_headline(self):
+        """Get the headline
+
+        Returns:
+            Dict: News title, description & url
+        """
+        if not self.url_structure:
+            raise Exception("Unspecified URL structure, please specify a url.")
+
+        # load soup object
+        self.soup = self.get_soup_object()
+
+        headline: Tag = self.soup.find("div", {"class": "col-sm-6"})
+        title: str = headline.h6.get_text()
+        referral_link: str = headline.a.get("href")
+        url: str = self.base_url + referral_link
+
+        # visit the headline to scrape news description
+        self.follow(referral_link)
+        description: str = self.soup.find("div", {"class": "content count-br"}).get_text().split(".")[0]
+
+        return {
+            "title": title,
+            "description": description,
+            "url": url
+        }
+
+
 if __name__ == "__main__":
-    financial_express = FinancialExpress()
-    financial_express.url_structure = "business/banking-finance/"
-    print(financial_express.get_headline())
+    ani = ANI()
+    ani.url_structure = "latest-news/"
+    print(ani.get_headline())
