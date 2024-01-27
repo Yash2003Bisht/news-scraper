@@ -574,13 +574,25 @@ class ANI(BaseScraper):
         self.soup = self.get_soup_object()
 
         headline: Tag = self.soup.find("div", {"class": "col-sm-6"})
-        title: str = headline.h6.get_text()
-        referral_link: str = headline.a.get("href")
-        url: str = self.base_url + referral_link
 
-        # visit the headline to scrape news description
-        self.follow(referral_link)
-        description: str = self.soup.find("div", {"class": "content count-br"}).get_text().split(".")[0]
+        if self.url_structure == "latest-news/":
+            title: str = headline.h6.get_text()
+            referral_link: str = headline.a.get("href")
+            url: str = self.base_url + referral_link
+
+            # visit the headline to scrape news description
+            self.follow(referral_link)
+            description: str = self.soup.find("div", {"class": "content count-br"}).get_text().split(".")[0]
+
+        else:
+            title: str = headline.figcaption.a.get_text()
+            url: str = self.base_url + headline.figcaption.a.get("href")
+
+            paragraphs = headline.figcaption.find_all("p")
+            description: str = paragraphs[1].get_text()
+
+            if not description:
+                description: str = paragraphs[2].get_text()
 
         return {
             "title": title,
@@ -591,5 +603,5 @@ class ANI(BaseScraper):
 
 if __name__ == "__main__":
     ani = ANI()
-    ani.url_structure = "latest-news/"
+    ani.url_structure = "category/business/corporate/"
     print(ani.get_headline())
