@@ -38,7 +38,7 @@ categories = {
                  ("TheHindu", "sci-tech/technology/"), ("TheHindu", "sci-tech/technology/gadgets/")],
     "technology": [("MoneyControl", "news/technology/"), ("Mint", "technology"), ("TheHindu", "sci-tech/"),
                    ("TheHindu", "sci-tech/technology/"), ("TheHindu", "sci-tech/technology/gadgets/"),
-                   ("FinancialExpress", "about/business-technology/")("ANI", "category/tech/mobile/"),
+                   ("FinancialExpress", "about/business-technology/"), ("ANI", "category/tech/mobile/"),
                    ("ANI", "category/tech/internet/"), ("ANI", "category/tech/computer/"), ("ANI", "category/tech/others/")],
     "gadgets": [("MoneyControl", "news/technology/"), ("Mint", "technology"), ("TheHindu", "sci-tech/"),
                 ("TheHindu", "sci-tech/technology/"), ("TheHindu", "sci-tech/technology/gadgets/")],
