@@ -603,5 +603,5 @@ class ANI(BaseScraper):
 
 if __name__ == "__main__":
     ani = ANI()
-    ani.url_structure = "category/business/corporate/"
+    ani.url_structure = "category/world/us/"
     print(ani.get_headline())

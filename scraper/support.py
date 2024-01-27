@@ -10,7 +10,8 @@ categories = {
     "business": [("MoneyControl", "news/business/"), ("FinancialExpress", "business/industry/"),
                  ("FinancialExpress", "business/sme/"), ("FinancialExpress", "business/banking-finance/"),
                  ("FinancialExpress", "business/roadways/"), ("FinancialExpress", "business/airlines-aviation/"),
-                 ("FinancialExpress", "business/railways/"), ("FinancialExpress", "business/infrastructure/")],
+                 ("FinancialExpress", "business/railways/"), ("FinancialExpress", "business/infrastructure/"),
+                 ("ANI", "category/business/corporate/")],
     "companies": [("MoneyControl", "news/tags/companies.html"), ("Mint", "companies"),
                   ("BusinessStandard", "companies")],
     "mutual-funds": [("MoneyControl", "news/business/mutual-funds"), ("Mint", "mutual-fund")],
@@ -30,39 +31,46 @@ categories = {
 
     # ------------------------------ Technology -----------------------------
     "tech": [("MoneyControl", "news/technology/"), ("Mint", "technology"), ("TheHindu", "sci-tech/"),
-             ("TheHindu", "sci-tech/technology/"), ("TheHindu", "sci-tech/technology/gadgets/")],
+             ("TheHindu", "sci-tech/technology/"), ("TheHindu", "sci-tech/technology/gadgets/"),
+             ("ANI", "category/tech/mobile/"), ("ANI", "category/tech/internet/"), ("ANI", "category/tech/computer/"),
+             ("ANI", "category/tech/others/")],
     "sci-tech": [("MoneyControl", "news/technology/"), ("Mint", "technology"), ("TheHindu", "sci-tech/"),
                  ("TheHindu", "sci-tech/technology/"), ("TheHindu", "sci-tech/technology/gadgets/")],
     "technology": [("MoneyControl", "news/technology/"), ("Mint", "technology"), ("TheHindu", "sci-tech/"),
                    ("TheHindu", "sci-tech/technology/"), ("TheHindu", "sci-tech/technology/gadgets/"),
-                   ("FinancialExpress", "about/business-technology/")],
+                   ("FinancialExpress", "about/business-technology/")("ANI", "category/tech/mobile/"),
+                   ("ANI", "category/tech/internet/"), ("ANI", "category/tech/computer/"), ("ANI", "category/tech/others/")],
     "gadgets": [("MoneyControl", "news/technology/"), ("Mint", "technology"), ("TheHindu", "sci-tech/"),
                 ("TheHindu", "sci-tech/technology/"), ("TheHindu", "sci-tech/technology/gadgets/")],
     "internet": [("TheHindu", "sci-tech/technology/internet/")],
 
     # ------------------------------ Sports ------------------------------
-    "sports": [("HindustanTimes", "cricket"), ("BusinessStandard", "sports"), ("TheHindu", "sport")],
-    "cricket": [("HindustanTimes", "cricket"), ("TheHindu", "sport/cricket/")],
-    "football": [("TheHindu", "sport/football/")],
-    "hockey": [("TheHindu", "sport/hockey/")],
-    "tennis": [("TheHindu", "sport/tennis/")],
+    "sports": [("HindustanTimes", "cricket"), ("BusinessStandard", "sports"), ("TheHindu", "sport"),
+               ("ANI", "category/sports/cricket/"), ("ANI", "category/sports/football/"), ("ANI", "category/sports/tennis/"),
+               ("ANI", "category/sports/others/"), ("ANI", "category/sports/hockey/")],
+    "cricket": [("HindustanTimes", "cricket"), ("TheHindu", "sport/cricket/"), ("ANI", "category/sports/cricket/")],
+    "football": [("TheHindu", "sport/football/"), ("ANI", "category/sports/football/")],
+    "hockey": [("TheHindu", "sport/hockey/"), ("ANI", "category/sports/hockey/")],
+    "tennis": [("TheHindu", "sport/tennis/"), ("ANI", "category/sports/tennis/")],
     "athletics": [("TheHindu", "sport/athletics/")],
     "moto-sport": [("TheHindu", "sport/motosport/")],
     "races": [("TheHindu", "sport/races/")],
+    "others": [("ANI", "category/sports/others/")],
 
     # ------------------------------ General News ----------------------------
     "latest-news": [("MoneyControl", "news/news-all/"), ("Mint", "latest-news"), ("NDTV", "latest"),
                     ("HindustanTimes", "latest-news"), ("BusinessStandard", "latest-news"), ("TheHindu", ""),
-                    ("FinancialExpress", "latest-news")],
+                    ("FinancialExpress", "latest-news"), ("ANI", "latest-news")],
     "news": [("MoneyControl", "news/news-all/"), ("Mint", "news"), ("NDTV", "latest"),
              ("HindustanTimes", "latest-news"), ("BusinessStandard", "latest-news"), ("TheHindu", "news"),
-             ("FinancialExpress", "latest-news")],
+             ("FinancialExpress", "latest-news"), ("ANI", "latest-news"), ("ANI", "category/national/general-news")],
     "india": [("MoneyControl", "news/india/"), ("NDTV", "india"), ("HindustanTimes", "india-news"),
               ("BusinessStandard", "indian-news"), ("TheHindu", "news/national/"), ("FinancialExpress", "india-news")],
     "national": [("MoneyControl", "news/india/"), ("NDTV", "india"), ("HindustanTimes", "india-news"),
                  ("BusinessStandard", "indian-news"), ("TheHindu", "news/national/")],
     "world": [("MoneyControl", "news/world/"), ("NDTV", "world-news"), ("HindustanTimes", "world-news"),
-              ("TheHindu", "news/international/")],
+              ("TheHindu", "news/international/"), ("ANI", "category/world/asia/"), ("ANI", "category/world/us/"),
+              ("ANI", "category/world/europe/"), ("ANI", "category/world/pacific/"), ("ANI", "category/world/middle-east/")],
     "international": [("MoneyControl", "news/world/"), ("NDTV", "world-news"), ("HindustanTimes", "world-news"),
                       ("TheHindu", "news/international/")],
 
@@ -72,12 +80,16 @@ categories = {
     "lifestyle": [("MoneyControl", "news/trends/lifestyle/"), ("HindustanTimes", "lifestyle"),
                   ("BusinessStandard", "lifestyle")],
     "health": [("MoneyControl", "news/health-and-fitness/"), ("BusinessStandard", "health"),
-               ("TheHindu", "sci-tech/health/"), ("FinancialExpress", "lifestyle/health/")],
+               ("TheHindu", "sci-tech/health/"), ("FinancialExpress", "lifestyle/health/"), ("ANI", "category/health/")],
     "trends": [("MoneyControl", "news/trends/")],
     "photos": [("MoneyControl", "news/photos/")],
     "travel": [("MoneyControl", "news/trends/travel/")],
     "social-media": [("BusinessStandard", "social-viral")],
     "agriculture": [("TheHindu", "sci-tech/agriculture/")],
+    "bollywood": [("ANI", "category/entertainment/bollywood/")],
+    "hollywood": [("ANI", "category/entertainment/hollywodd/")],
+    "music": [("ANI", "category/entertainment/music/")],
+    "out-of-box": [("ANI", "category/entertainment/out-of-box/")],
 
     # ------------------------------ States & Cities News ------------------------------
     "delhi": [("HindustanTimes", "cities/delhi-news"), ("TheHindu", "news/cities/Delhi/")],
@@ -118,12 +130,12 @@ categories = {
 
     # ------------------------------ Politics ------------------------------
     "politics": [("MoneyControl", "news/politics/"), ("BusinessStandard", "politics"),
-                 ("FinancialExpress", "policy/economy/")],
+                 ("FinancialExpress", "policy/economy/"), ("ANI", "category/national/politics/")],
     "elections": [("BusinessStandard", "elections")],
 
     # ------------------------------ Education ------------------------------
     "science": [("MoneyControl", "news/tags/science.html"), ("TheHindu", "sci-tech/science/"),
-                ("FinancialExpress", "life/science/")],
+                ("FinancialExpress", "life/science/"), ("ANI", "category/science/")],
     "books": [("MoneyControl", "news/tags/books.html"), ("BusinessStandard", "book")],
     "infographic": [("MoneyControl", "news/infographic/")],
     "environment": [("TheHindu", "sci-tech/energy-and-environment")],
@@ -135,9 +147,10 @@ categories = {
     "opinion": [("Mint", "opinion"), ("NDTV", "opinion")],
     "interview": [("TheHindu", "opinion/interview/")],
     "offbeat": [("NDTV", "offbeat")],
-    "feature": [("NDTV", "feature")],
+    "feature": [("NDTV", "feature"), ("ANI", "category/national/features/")],
     "others": [("HindustanTimes", "cities/others-news"), ("TheHindu", "news/national/other-states/"),
-               ("TheHindu", "sport/other-sports/"), ("TheHindu", "data/"), ("TheHindu", "opinion/lead/")],
+               ("TheHindu", "sport/other-sports/"), ("TheHindu", "data/"), ("TheHindu", "opinion/lead/"),
+               ("ANI", "category/world/others/")],
     "cloud-verse": [("FinancialExpress", "about/cloud-verse/")],
     "safety-privacy": [("FinancialExpress", "about/safety-privacy/")],
     "artificial-intelligence": [("FinancialExpress", "about/artificial-intelligence/")],
@@ -152,7 +165,7 @@ supported_categories = categories.keys()
 
 # ----------------------------------------- CRAWLERS -----------------------------------------
 crawlers = ["MoneyControl", "Mint", "NDTV", "BusinessStandard", "TheHindu", "HindustanTimes",
-            "FinancialExpress"]
+            "FinancialExpress", "ANI"]
 
 # --------------------------------------------------------------------------------------------
 
